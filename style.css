@@ -1,0 +1,68 @@
+
+*{
+    box-sizing: border-box;
+}
+
+body{
+    background-color: black;
+}
+
+
+.pageGrid{
+    display: grid;
+    grid-template-columns: 30% 70%;
+    padding: 10px;
+    margin-top: 60px;
+    width: 75%;
+    margin: auto;
+    margin-top: 10%;
+}
+
+.grid-item{
+    padding: 20px;
+    border: 2px solid black;
+    height: 70vh;
+    background-color: grey;
+}
+
+.grid1 > .newToDo{
+    background-color: blue;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.grid1 > .enter{
+    background-color: red;
+}
+
+.enterClear{
+    display: flex;
+    justify-content: space-evenly;
+    position: relative;
+    top: 90%;
+}
+
+.enterClear > .enter{
+    background-color: green;
+}
+
+.enterClear > .clear{
+    background-color: red;
+}
+
+button{
+    width: 70px;
+    height: 35px;
+    color: white;
+}
+
+.grid1 > #formContainer{
+    background-color: red;
+    height: 50%;
+    display: block;
+    margin-top: 30%;
+
+}
+
+
