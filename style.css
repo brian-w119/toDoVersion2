@@ -58,11 +58,60 @@ button{
 }
 
 .grid1 > #formContainer{
-    background-color: red;
     height: 50%;
     display: block;
-    margin-top: 30%;
+    margin-top: 20%;
+    margin-left: 25%;
 
 }
+
+#priority{
+    position: relative;
+    top: 40%;
+    text-align: center;;
+}
+
+#details{
+    position: relative;
+    top: 10%;
+    height: 40%;
+    width: 180px;
+    height: 70px;
+}
+
+#dueDate{
+    position: relative;
+    top: 25%;
+    margin-left: 8%;
+}
+
+.grid2{
+    display: flex;
+    justify-content: space-between;
+}
+
+.grid2 > * {
+    background-color: white;
+    width: 30%;
+    height: 90%;
+    border: 1 px solid black;  
+    margin-top: 10%;
+}
+
+#column2Heading{
+    position: relative;
+    top: 10px;
+}
+
+#column2Heading{
+    height: 4%;
+    color: red;
+    position: relative;
+    font-size: large;
+    margin-top: 5px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 
 
