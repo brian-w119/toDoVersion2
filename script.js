@@ -7,7 +7,7 @@ const toDo = {
     enter  : makeButton(),
     clear  : makeButton(),
 
-    //app split in half
+    //grid1 for the new tasks, grid2 for the outstanding tasks
     grid1  : document.querySelector(".grid1"),
     grid2  : document.querySelector(".grid2"),
 
@@ -17,15 +17,16 @@ const toDo = {
     details: makeInput(),
     dueDate: makeInput(),
     priority: makeInput(),
+    eachTask: makeDiv(),
     columnsContainer: makeDiv(),
     formContainer : makeDiv(),
     outstanding : document.createElement("h2"),
     
     
     // columns for outstanding tasks
+    column0: makeDiv(),
     column1 : makeDiv(),
     column2 : makeDiv(),
-    column3 : makeDiv(),
 
     defaultState(){
         this.createTask.classList.add("newToDo");
@@ -51,6 +52,7 @@ const toDo = {
         this.title.name = "task";
         this.title.value = "";
         this.title.placeholder = "Title";
+        this.title.required = true;
         this.formContainer.appendChild(this.title);
         this.grid1.appendChild(this.formContainer);
 
@@ -58,6 +60,7 @@ const toDo = {
         this.details.name = "details";
         this.details.id = "details";
         this.details.value = "";
+        this.details.required = true;
         this.details.placeholder = "Enter Task Details";
         this.formContainer.appendChild(this.details);
 
@@ -65,23 +68,39 @@ const toDo = {
         this.dueDate.name = "dueDate";
         this.dueDate.id = "dueDate";
         this.dueDate.value = "";
+        this.dueDate.required = true;
         this.formContainer.appendChild(this.dueDate);
 
         this.priority.type = "text";
         this.priority.classList.add("priority");
         this.priority.id = "priority";
         this.priority.value = "";
-        this.priority.placeholder = "Low/Medium/High";
+        this.priority.required = true;
+        this.priority.placeholder = "Priority: Low / Medium / High";
         this.formContainer.appendChild(this.priority);
 
         this.grid1.appendChild(this.formContainer);
     },
 
     makeOutstandingColumns(){
-        const columnArr = [this.column1, this.column2, this.column3];
+        const columnArr = [this.column0, this.column1, this.column2];
         for(let i = 0; i < columnArr.length; i++){
             this.grid2.appendChild(columnArr[i]);
             columnArr[i].id = `column${i}`;
+        
+            const newDiv = makeDiv();
+            if(columnArr[i].id === "column0"){
+                newDiv.textContent = "Priority Low";
+
+            }else if(columnArr[i].id === "column1"){
+                newDiv.textContent = "Priority Medium";
+             
+            }else if(columnArr[i].id === "column2"){
+                newDiv.textContent = "Priority High";
+
+            };
+            newDiv.style.color = "white";
+            columnArr[i].appendChild(newDiv);      
         };
     },
 
@@ -91,12 +110,23 @@ const toDo = {
         this.grid2.appendChild(this.outstanding);
         
     },
+
+    captureInput(){
+        const inputs = [this.title, this.details, this.dueDate, this.priority];
+        this.enter.addEventListener("click", () =>{
+
+        });
+       
+    },
+
+
     
     init(){
         this.defaultState();
         this.makeForm();
         this.makeOutstandingColumns();
         //this.createColumnTitle();
+        this.captureInput();
     },
 };
 

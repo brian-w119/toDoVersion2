@@ -88,30 +88,38 @@ button{
 .grid2{
     display: flex;
     justify-content: space-between;
+    overflow: hidden;
 }
 
 .grid2 > * {
     background-color: white;
     width: 30%;
-    height: 90%;
+    height: 85%;
     border: 1 px solid black;  
     margin-top: 10%;
+    overflow: auto;
 }
 
-#column2Heading{
-    position: relative;
-    top: 10px;
+#column0 > div{
+    background-color: blue;
+    text-align: center;
+    font-weight: bold;
+}
+#column1 > div{
+    background-color: orange;
+    text-align: center;
+    font-weight: bold;
 }
 
-#column2Heading{
-    height: 4%;
-    color: red;
-    position: relative;
-    font-size: large;
-    margin-top: 5px;
-    margin-left: auto;
-    margin-right: auto;
+#column2 > div{
+    background-color: red;
+    text-align: center;
+    font-weight: bold;
 }
+
+
+
+
 
 
 
