@@ -82,8 +82,14 @@ const toDo = {
         this.grid1.appendChild(this.formContainer);
     },
 
+    generateForm(){
+        this.createTask.addEventListener("click", ()=> this.makeForm());
+    },
+
+    //makes columns for outstanding tasks and add headings
     makeOutstandingColumns(){
         const columnArr = [this.column0, this.column1, this.column2];
+
         for(let i = 0; i < columnArr.length; i++){
             this.grid2.appendChild(columnArr[i]);
             columnArr[i].id = `column${i}`;
@@ -100,6 +106,7 @@ const toDo = {
 
             };
             newDiv.style.color = "white";
+            newDiv.style.marginBottom = "10px";
             columnArr[i].appendChild(newDiv);      
         };
     },
@@ -111,22 +118,50 @@ const toDo = {
         
     },
 
-    captureInput(){
-        const inputs = [this.title, this.details, this.dueDate, this.priority];
-        this.enter.addEventListener("click", () =>{
-
-        });
-       
+    transferInput(){
+        this.enter.addEventListener("click", () => this.captureInput());
     },
 
+    //assigns tasks to various columns
+    captureInput(){
+        const inputs = [this.title, this.details];
+        let newDiv1 = makeDiv();
+        newDiv1.style.backgroundColor = "rgb(209, 215, 254)";
+        newDiv1.style.marginBottom = "10px";
+        let priority = this.priority.value.toUpperCase();
+   
+        for(let i = 0; i < inputs.length; i++){
+            newDiv1.innerText += `${inputs[i].value}\n`;
+            if(priority  === "LOW"){
+                this.column0.appendChild(newDiv1); 
 
-    
+            }else if(priority === "MEDIUM"){
+                this.column1.appendChild(newDiv1); 
+
+            }else if(priority === "HIGH"){
+                this.column2.appendChild(newDiv1); 
+            };
+        };
+    },
+
+    clearInput(){
+        this.clear.addEventListener("click", ()=> {
+            const allInputs = [this.dueDate, this.details, this.priority, this.title];
+            for(let i = 0; i < allInputs.length; i++){
+                allInputs[i].value = "";
+            };
+        });
+    },
+
+     
     init(){
         this.defaultState();
-        this.makeForm();
+        //this.makeForm();
+        this.generateForm();
         this.makeOutstandingColumns();
         //this.createColumnTitle();
-        this.captureInput();
+        this.transferInput();
+        this.clearInput();
     },
 };
 

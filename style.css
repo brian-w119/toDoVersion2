@@ -117,6 +117,11 @@ button{
     font-weight: bold;
 }
 
+#column2Heading{
+    position: relative;
+    top: 5px;
+}
+
 
 
 
