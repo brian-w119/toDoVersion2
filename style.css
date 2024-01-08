@@ -1,4 +1,3 @@
-
 *{
     box-sizing: border-box;
 }
@@ -122,8 +121,16 @@ button{
     top: 5px;
 }
 
-
-
+.enlargedToDo{
+    width: 60vw;
+    height: 70vh;
+    border: 2px solid red;
+    z-index: 2;
+    position: absolute;
+    top: 10.5vw;
+    left: 30vw;
+    background-color: grey;
+}
 
 
 

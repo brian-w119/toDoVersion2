@@ -1,4 +1,3 @@
-
 import { makeDiv, makeButton, makeInput, InputField} from "./newElements.js";
 
 const toDo = {
@@ -21,6 +20,10 @@ const toDo = {
     columnsContainer: makeDiv(),
     formContainer : makeDiv(),
     outstanding : document.createElement("h2"),
+    newDiv1: makeDiv(),
+    pageGrid: document.querySelector(".pageGrid"),
+    enlargedToDo: makeDiv(),
+    cancel: makeDiv(),
     
     
     // columns for outstanding tasks
@@ -115,17 +118,16 @@ const toDo = {
         this.outstanding.textContent = "OUTSTANDING TASKS";
         this.outstanding.id = "column2Heading";
         this.grid2.appendChild(this.outstanding);
-        
     },
 
     transferInput(){
-        this.enter.addEventListener("click", () => this.captureInput());
+        this.enter.addEventListener("click", ()=> this.captureInput());
     },
 
     //assigns tasks to various columns
     captureInput(){
-        const inputs = [this.title, this.details];
-        let newDiv1 = makeDiv();
+        const newDiv1 = makeDiv();
+        const inputs = [this.title, this.dueDate];
         newDiv1.style.backgroundColor = "rgb(209, 215, 254)";
         newDiv1.style.marginBottom = "10px";
         let priority = this.priority.value.toUpperCase();
@@ -141,9 +143,16 @@ const toDo = {
             }else if(priority === "HIGH"){
                 this.column2.appendChild(newDiv1); 
             };
+            
+            newDiv1.addEventListener("mouseover", ()=> {
+               console.log(this.details.value);
+               this.expandToDo();
+            });
         };
+        console.log(this.task);
     },
 
+    //clears data from the input fields
     clearInput(){
         this.clear.addEventListener("click", ()=> {
             const allInputs = [this.dueDate, this.details, this.priority, this.title];
@@ -151,6 +160,15 @@ const toDo = {
                 allInputs[i].value = "";
             };
         });
+    },
+    //attaches the expanded task to the body and adds class
+    expandToDo(){
+        this.enlargedToDo.classList.add("enlargedToDo");
+        document.body.appendChild(this.enlargedToDo);
+    },
+
+    fillEnlarged(){
+        this.cancel.id = "cancel";
     },
 
      
@@ -162,6 +180,7 @@ const toDo = {
         //this.createColumnTitle();
         this.transferInput();
         this.clearInput();
+        //this.expandToDo();
     },
 };
 
