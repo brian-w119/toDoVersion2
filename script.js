@@ -23,7 +23,14 @@ const toDo = {
     newDiv1: makeDiv(),
     pageGrid: document.querySelector(".pageGrid"),
     enlargedToDo: makeDiv(),
-    cancel: makeDiv(),
+    cancel: makeButton(),
+    expandedInfo: makeDiv(), // container for information when task expanded
+
+    //divs to contain task details when expanded
+    title1: makeDiv(),
+    priority1: makeDiv(),
+    dueDate1: makeDiv(),
+    details1: makeDiv(),
     
     
     // columns for outstanding tasks
@@ -144,8 +151,7 @@ const toDo = {
                 this.column2.appendChild(newDiv1); 
             };
             
-            newDiv1.addEventListener("mouseover", ()=> {
-               console.log(this.details.value);
+            newDiv1.addEventListener("mousedown", ()=> {
                this.expandToDo();
             });
         };
@@ -161,14 +167,26 @@ const toDo = {
             };
         });
     },
+
     //attaches the expanded task to the body and adds class
     expandToDo(){
         this.enlargedToDo.classList.add("enlargedToDo");
+        this.cancel.id = "cancel";
+        this.cancel.textContent = "X";
+        this.enlargedToDo.appendChild(this.cancel);
         document.body.appendChild(this.enlargedToDo);
     },
 
+    //populate enlarged task with details
     fillEnlarged(){
-        this.cancel.id = "cancel";
+        this.expandedInfo.id = "furtherInfo";
+        this.enlargedToDo.appendChild(this.expandedInfo);
+    },
+
+    closeEnlarged(){
+        this.cancel.addEventListener("click", ()=> {
+            document.body.removeChild(this.enlargedToDo);
+        });
     },
 
      
@@ -180,7 +198,8 @@ const toDo = {
         //this.createColumnTitle();
         this.transferInput();
         this.clearInput();
-        //this.expandToDo();
+        this.closeEnlarged();
+        this.fillEnlarged();
     },
 };
 
