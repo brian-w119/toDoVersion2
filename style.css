@@ -122,13 +122,13 @@ button{
 }
 
 .enlargedToDo{
-    width: 60vw;
+    width: 51vw;
     height: 70vh;
     border: 2px solid red;
     z-index: 2;
     position: absolute;
     top: 10.4vw;
-    left: 30vw;
+    left: 36vw;
     background-color: grey;
 }
 
@@ -149,12 +149,17 @@ button{
     transform: scale(1.2);
 }
 
-#expandedInfo{
-    width: 15vw;
-    height: 20vw;
+#furtherInfo{
+    width: 30vw;
+    height: 30vw;
     background-color: white;
     border: 1px solid black;
+    margin: auto;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
 }
+
 
 
 
