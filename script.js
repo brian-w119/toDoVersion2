@@ -172,7 +172,7 @@ const toDo = {
         });
     },
 
-    //attaches the expanded task to the body and adds class
+    //attaches the expanded task to the body and adds class and expands the task view
     expandToDo(){
         this.enlargedToDo.classList.add("enlargedToDo");
         this.cancel.id = "cancel";
@@ -180,8 +180,9 @@ const toDo = {
         this.enlargedToDo.appendChild(this.cancel);
         document.body.appendChild(this.enlargedToDo);
         this.toDoExpanded = true;
-        this.disableInputButtons();
+        this.disableEnableButtons();
     },
+
 
     //populate enlarged task with details
     fillEnlarged(){
@@ -189,34 +190,26 @@ const toDo = {
         this.enlargedToDo.appendChild(this.expandedInfo);
     },
 
+    //closes the enlarged task view and enables input buttons
     closeEnlarged(){
         this.cancel.addEventListener("click", ()=> {
             document.body.removeChild(this.enlargedToDo);
+            this.toDoExpanded = false;
+            this.disableEnableButtons();
         });
     },
 
-
-    disableInputButtons(){
+    disableEnableButtons(){
         const inputButtons = [this.createTask, this.clear, this.enter];
         for(let i = 0; i < inputButtons.length; i++){
-            inputButtons[i].disabled = true;
+            if(this.toDoExpanded === true){
+               inputButtons[i].disabled = true;
+            }else if(this.toDoExpanded === false){
+                inputButtons[i].disabled = false;
+            };
         };
+        console.log(this.toDoExpanded);
     },
-
-    checkExpandedState(){
-        if(this.toDoExpanded === true){
-            this.disableInputButtons();
-        };
-    },
-
-    whenExpandedClose(){
-        this.cancel.addEventListener("click", ()=> {
-            this.toDoExpanded.disabled = false;
-        });
-    },
-
-
-
      
     init(){
         this.defaultState();
@@ -229,8 +222,8 @@ const toDo = {
         this.closeEnlarged();
         this.fillEnlarged();
         //this.disableInputButtons();
-        this.checkExpandedState();
-        this.whenExpandedClose();
+      //  this.checkExpandedState();
+       // this.whenExpandedClose();
     },
 };
 
