@@ -13,6 +13,10 @@ function makeInput(){
     return document.createElement("input");
 };
 
+function makeFormElement(){
+    return document.createElement("form");
+};
+
 class InputField {
     constructor(name, value, placeholder) {
         this.name = "name";
@@ -21,4 +25,6 @@ class InputField {
     }
 };
 
-export{makeDiv, makeButton, makeInput, InputField};
+
+
+export{makeDiv, makeButton, makeInput, InputField, makeFormElement};

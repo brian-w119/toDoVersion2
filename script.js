@@ -1,4 +1,4 @@
-import { makeDiv, makeButton, makeInput, InputField} from "./newElements.js";
+import { makeDiv, makeButton, makeInput, InputField, makeFormElement} from "./newElements.js";
 
 const toDo = {
 
@@ -24,8 +24,17 @@ const toDo = {
     pageGrid: document.querySelector(".pageGrid"),
     enlargedToDo: makeDiv(),
     cancel: makeButton(),
-    expandedInfo: makeDiv(), // container for information when task expanded
+
+    // container for information when task expanded
+    expandedInfo: makeDiv(), 
+
     toDoExpanded: false,
+
+    //container to house buttons for expanded tasks
+    taskButtonsContainer: makeDiv(),
+
+    taskDelete: makeButton(),
+    taskReAssign: makeButton(),
    
     //divs to contain task details when expanded
     title1: makeDiv(),
@@ -33,14 +42,10 @@ const toDo = {
     dueDate1: makeDiv(),
     details1: makeDiv(),
     
-    
-    // columns for outstanding tasks
+     // columns for outstanding tasks
     column0: makeDiv(),
     column1 : makeDiv(),
     column2 : makeDiv(),
-
-   
-
 
     defaultState(){
         this.createTask.classList.add("newToDo");
@@ -62,18 +67,21 @@ const toDo = {
    // some attributes given to form elements
     makeForm(){
         this.formContainer.id = "formContainer";
+
         this.title.type = "text";
         this.title.name = "task";
         this.title.value = "";
         this.title.placeholder = "Title";
         this.title.required = true;
         this.formContainer.appendChild(this.title);
-        this.grid1.appendChild(this.formContainer);
+        //this.grid1.appendChild(this.formContainer);
 
         this.details.type = "text";
         this.details.name = "details";
         this.details.id = "details";
         this.details.value = "";
+        this.details.maxLength = "100";
+        this.details.style.width = "200px";
         this.details.required = true;
         this.details.placeholder = "Enter Task Details";
         this.formContainer.appendChild(this.details);
@@ -83,6 +91,7 @@ const toDo = {
         this.dueDate.id = "dueDate";
         this.dueDate.value = "";
         this.dueDate.required = true;
+        this.dueDate.disabled = false;
         this.formContainer.appendChild(this.dueDate);
 
         this.priority.type = "text";
@@ -157,6 +166,7 @@ const toDo = {
             
             newDiv1.addEventListener("mousedown", ()=> {
                this.expandToDo();
+               this.expandedTaskButtons();
             });
         };
         console.log(this.task);
@@ -184,16 +194,55 @@ const toDo = {
         this.fillEnlarged();
     },
 
-
     //populate enlarged task with details
     fillEnlarged(){
-        const allTaskDetails = [this.title, this.details, this.dueDate];
+        const allTaskDetails = [this.title, this.details, this.dueDate, this.priority];
         this.expandedInfo.id = "furtherInfo";
         
         for(let i = 0; i < allTaskDetails.length; i++){
             this.expandedInfo.appendChild(allTaskDetails[i]);
         };
         this.enlargedToDo.appendChild(this.expandedInfo);
+        this.infoLayout();
+       // this.enlargedToDo.appendChild(this.expandedTaskButtons);
+    },
+
+    // positions the different fields of the expanded task view
+    infoLayout(){
+        const info = [this.title, this.details, this.dueDate, this.priority];
+        for(let i = 0; i < info.length; i++){
+            info[i].style.display = "block";
+            info[i].style.marginLeft = "auto";
+            info[i].style.marginRight = "auto";
+
+            if(info[i] === this.details){
+                info[i].style.width = "300px";
+            };
+
+            if(info[i] === this.title){
+                info[i].style.marginTop = "100px";
+            };
+
+            if(info[i] === this.dueDate){
+                info[i].disabled = "true";
+            };
+        };
+    },
+
+    expandedTaskButtons(){
+        this.taskButtonsContainer.id = "newContainer";
+
+        this.taskDelete.id  = "taskDelete";
+        this.taskDelete.innerText = "Delete";
+
+        this.taskReAssign.id = "reAssign";
+        this.taskReAssign.innerText = "Re-Assign";
+
+        const buttons = [this.taskDelete, this.taskReAssign];
+        for(let i = 0; i < buttons.length; i++){
+            this.enlargedToDo.appendChild(buttons[i]);
+        };
+       // return this.taskButtonsContainer;
     },
 
     //closes the enlarged task view and enables input buttons
@@ -204,7 +253,7 @@ const toDo = {
             this.disableEnableButtons();
         });
     },
-    
+
     disableEnableButtons(){
         const inputButtons = [this.createTask, this.clear, this.enter];
         for(let i = 0; i < inputButtons.length; i++){
@@ -225,7 +274,7 @@ const toDo = {
         this.transferInput();
         this.clearInput();
         this.closeEnlarged();
-        
+        //this.reMakeForm();
     },
 };
 

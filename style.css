@@ -74,8 +74,11 @@ button{
     position: relative;
     top: 10%;
     height: 40%;
-    width: 180px;
+    width: auto;
     height: 70px;
+    overflow: scroll;
+    overflow-wrap: break-word;
+    background-color: white;
 }
 
 #dueDate{
@@ -160,8 +163,21 @@ button{
     transform: translateY(-50%);
 }
 
+#newContainer{
+    width: 200px;
+    display: flex;
+    justify-content: space-between;
+    background-color: blue;
+}
 
+#taskDelete{
+    color: red;
+    width: 70px;
+}
 
-
-
-
+#reAssign{
+    color: green;
+    width: 70px;
+    position: absolute;
+    top: 5px;
+}
