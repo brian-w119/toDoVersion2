@@ -187,7 +187,7 @@ const toDo = {
 
     //populate enlarged task with details
     fillEnlarged(){
-        const allTaskDetails = [this.task, this.details, this.dueDate];
+        const allTaskDetails = [this.title, this.details, this.dueDate];
         this.expandedInfo.id = "furtherInfo";
         
         for(let i = 0; i < allTaskDetails.length; i++){
