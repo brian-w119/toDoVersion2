@@ -26,7 +26,7 @@ const toDo = {
     cancel: makeButton(),
     expandedInfo: makeDiv(), // container for information when task expanded
     toDoExpanded: false,
-
+   
     //divs to contain task details when expanded
     title1: makeDiv(),
     priority1: makeDiv(),
@@ -181,12 +181,18 @@ const toDo = {
         document.body.appendChild(this.enlargedToDo);
         this.toDoExpanded = true;
         this.disableEnableButtons();
+        this.fillEnlarged();
     },
 
 
     //populate enlarged task with details
     fillEnlarged(){
+        const allTaskDetails = [this.task, this.details, this.dueDate];
         this.expandedInfo.id = "furtherInfo";
+        
+        for(let i = 0; i < allTaskDetails.length; i++){
+            this.expandedInfo.appendChild(allTaskDetails[i]);
+        };
         this.enlargedToDo.appendChild(this.expandedInfo);
     },
 
@@ -198,7 +204,7 @@ const toDo = {
             this.disableEnableButtons();
         });
     },
-
+    
     disableEnableButtons(){
         const inputButtons = [this.createTask, this.clear, this.enter];
         for(let i = 0; i < inputButtons.length; i++){
@@ -210,20 +216,16 @@ const toDo = {
         };
         console.log(this.toDoExpanded);
     },
+
      
     init(){
         this.defaultState();
-        //this.makeForm();
         this.generateForm();
         this.makeOutstandingColumns();
-        //this.createColumnTitle();
         this.transferInput();
         this.clearInput();
         this.closeEnlarged();
-        this.fillEnlarged();
-        //this.disableInputButtons();
-      //  this.checkExpandedState();
-       // this.whenExpandedClose();
+        
     },
 };
 
