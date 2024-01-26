@@ -41,11 +41,14 @@ const toDo = {
     priority1: makeDiv(),
     dueDate1: makeDiv(),
     details1: makeDiv(),
-    
+
+
      // columns for outstanding tasks
     column0: makeDiv(),
     column1 : makeDiv(),
     column2 : makeDiv(),
+
+    taskButtonsContainer: makeDiv(),
 
     defaultState(){
         this.createTask.classList.add("newToDo");
@@ -144,14 +147,17 @@ const toDo = {
         this.enter.addEventListener("click", ()=> this.captureInput());
     },
 
+    
     //assigns tasks to various columns
     captureInput(){
         const newDiv1 = makeDiv();
+        newDiv1.id = "taskStyling";
         const inputs = [this.title, this.dueDate];
         newDiv1.style.backgroundColor = "rgb(209, 215, 254)";
         newDiv1.style.marginBottom = "10px";
+        newDiv1.style.color = "black";
         let priority = this.priority.value.toUpperCase();
-   
+        
         for(let i = 0; i < inputs.length; i++){
             newDiv1.innerText += `${inputs[i].value}\n`;
             if(priority  === "LOW"){
@@ -169,7 +175,6 @@ const toDo = {
                this.expandedTaskButtons();
             });
         };
-        console.log(this.task);
     },
 
     //clears data from the input fields
@@ -204,8 +209,9 @@ const toDo = {
         };
         this.enlargedToDo.appendChild(this.expandedInfo);
         this.infoLayout();
-       // this.enlargedToDo.appendChild(this.expandedTaskButtons);
+        //return allTaskDetails;               
     },
+
 
     // positions the different fields of the expanded task view
     infoLayout(){
@@ -251,6 +257,7 @@ const toDo = {
             document.body.removeChild(this.enlargedToDo);
             this.toDoExpanded = false;
             this.disableEnableButtons();
+            this.enlargedToDo.removeChild(this.taskButtonsContainer);
         });
     },
 
@@ -265,8 +272,43 @@ const toDo = {
         };
         console.log(this.toDoExpanded);
     },
+    
+    //re-assigns current tasks
+    reAssignTask(){
+        this.taskReAssign.addEventListener("click", ()=>{
+            this.createreAssignButtons();
+            this.removeDivContents();
+        });
+    },
 
-     
+    createreAssignButtons(){
+        this.taskButtonsContainer.id = "taskButtons";
+
+        const lowPriority = makeButton();
+        lowPriority.innerText = "Low Priority";
+
+        const mediumPriority = makeButton();
+        mediumPriority.innerText = "Medium Priority";
+
+        const highPriority = makeButton();
+        highPriority.innerText = "High Priority";
+
+        const priorities = [mediumPriority, highPriority, lowPriority];
+        for(let i = 0; i < priorities.length; i++){
+           priorities[i].classList.add("buttonsStyling");
+           this.taskButtonsContainer.appendChild(priorities[i]);
+        };
+        this.enlargedToDo.appendChild(this.taskButtonsContainer);
+        console.log(this.taskButtonsContainer);
+    },
+
+    removeDivContents(){
+        const contents = [this.taskReAssign, this.taskDelete, this.expandedInfo];
+        for(let i = 0; i < contents.length; i++){
+            this.enlargedToDo.removeChild(contents[i]);
+        };
+    },
+
     init(){
         this.defaultState();
         this.generateForm();
@@ -274,7 +316,7 @@ const toDo = {
         this.transferInput();
         this.clearInput();
         this.closeEnlarged();
-        //this.reMakeForm();
+        this.reAssignTask();
     },
 };
 

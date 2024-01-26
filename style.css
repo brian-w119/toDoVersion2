@@ -181,3 +181,40 @@ button{
     position: absolute;
     top: 5px;
 }
+
+#taskStyling{
+    margin-bottom: 10px;
+    color:rgb(209, 215, 254)
+}
+
+.priorities{
+    color: black;
+}
+
+.test{
+    color: black;
+    margin-bottom: 5px;
+    display: block;
+
+}
+
+#buttonsContainer{
+    background-color: red;
+    width: 100px;
+    height: 100px;
+}
+
+#taskButtons{
+    width: 250px;
+    height: 35px;
+    display: flex;
+    justify-content: space-evenly;
+    background-color: grey;
+    position: absolute;
+    top: 45%;
+    right: 42%;    
+}
+
+.buttonsStyling{
+    background-color: brown;
+}
