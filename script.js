@@ -24,6 +24,7 @@ const toDo = {
     pageGrid: document.querySelector(".pageGrid"),
     enlargedToDo: makeDiv(),
     cancel: makeButton(),
+    taskButtonsHolder: makeDiv(),
 
     // container for information when task expanded
     expandedInfo: makeDiv(), 
@@ -42,13 +43,11 @@ const toDo = {
     dueDate1: makeDiv(),
     details1: makeDiv(),
 
-
-     // columns for outstanding tasks
+    // columns for outstanding tasks
     column0: makeDiv(),
     column1 : makeDiv(),
     column2 : makeDiv(),
 
-    taskButtonsContainer: makeDiv(),
 
     defaultState(){
         this.createTask.classList.add("newToDo");
@@ -246,9 +245,23 @@ const toDo = {
 
         const buttons = [this.taskDelete, this.taskReAssign];
         for(let i = 0; i < buttons.length; i++){
-            this.enlargedToDo.appendChild(buttons[i]);
+            this.taskButtonsContainer.appendChild(buttons[i]);
         };
-       // return this.taskButtonsContainer;
+        this.enlargedToDo.appendChild(this.taskButtonsContainer);
+    },
+
+    //removes DELETE and ReAssign buttons
+    removeButtons(){
+        const buttons =  [this.taskDelete, this.taskReAssign];
+        for(let i = 0; i < buttons.length; i++){
+            this.taskButtonsContainer.removeChild(buttons[i]);
+        };
+    },
+    
+     //removes DELETE and ReAssign buttons on click
+    removeButtons2(){
+        this.taskReAssign.addEventListener("click", ()=> this.removeButtons());
+        alert("ok");
     },
 
     //closes the enlarged task view and enables input buttons
@@ -258,6 +271,8 @@ const toDo = {
             this.toDoExpanded = false;
             this.disableEnableButtons();
             this.enlargedToDo.removeChild(this.taskButtonsContainer);
+            this.removeDivContents();
+            this.taskReAssign.disabled = false;
         });
     },
 
@@ -277,9 +292,11 @@ const toDo = {
     reAssignTask(){
         this.taskReAssign.addEventListener("click", ()=>{
             this.createreAssignButtons();
-            this.removeDivContents();
+            this.disableReAssignButton();
+           // this.removeButtons();
         });
     },
+
 
     createreAssignButtons(){
         this.taskButtonsContainer.id = "taskButtons";
@@ -300,13 +317,22 @@ const toDo = {
         };
         this.enlargedToDo.appendChild(this.taskButtonsContainer);
         console.log(this.taskButtonsContainer);
+        //removes the expanded tasks, so that only task re-assign buttons are visible
+        this.enlargedToDo.removeChild(this.expandedInfo);
     },
 
     removeDivContents(){
-        const contents = [this.taskReAssign, this.taskDelete, this.expandedInfo];
-        for(let i = 0; i < contents.length; i++){
-            this.enlargedToDo.removeChild(contents[i]);
-        };
+        const taskButtons = document.querySelector("#taskButtons")
+        const contents = [this.taskReAssign, this.taskDelete];
+        //for(let i = 0; i < contents.length; i++){
+            //this.enlargedToDo.removeChild(contents[i]);
+        //};
+        //this.enlargedToDo.removeChild(taskButtons);
+        this.taskButtonsContainer.innerText = "";
+    },
+
+    disableReAssignButton(){
+        this.taskReAssign.disabled = "true";
     },
 
     init(){
@@ -317,6 +343,7 @@ const toDo = {
         this.clearInput();
         this.closeEnlarged();
         this.reAssignTask();
+        this.removeButtons2();
     },
 };
 

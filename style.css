@@ -164,20 +164,26 @@ button{
 }
 
 #newContainer{
-    width: 200px;
+    width: 70px;
+    height: 80px;
     display: flex;
-    justify-content: space-between;
-    background-color: blue;
+    background-color: grey;
 }
 
 #taskDelete{
-    color: red;
+    color: blue;
     width: 70px;
 }
 
 #reAssign{
     color: green;
     width: 70px;
+}
+
+#newContainer{
+    color: green;
+    width: 70px;
+    flex-wrap: wrap;
     position: absolute;
     top: 5px;
 }
