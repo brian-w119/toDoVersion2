@@ -14,7 +14,7 @@ function makeInput(){
 };
 
 function makeFormElement(){
-    return document.createElement("form");
+    return document.createElement("textarea");
 };
 
 class InputField {

@@ -13,7 +13,7 @@ const toDo = {
 
     clearEnter: makeDiv(), //container to hold enter and clear buttons
     title: makeInput(),
-    details: makeInput(),
+    details: makeFormElement(),
     dueDate: makeInput(),
     priority: makeInput(),
     eachTask: makeDiv(),
@@ -78,12 +78,13 @@ const toDo = {
         this.formContainer.appendChild(this.title);
         //this.grid1.appendChild(this.formContainer);
 
-        this.details.type = "text";
         this.details.name = "details";
         this.details.id = "details";
         this.details.value = "";
-        this.details.maxLength = "100";
-        this.details.style.width = "200px";
+        //this.details.maxLength = "100";
+        //this.details.style.width = "200px";
+        this.details.row = "3";
+        this.details.columns = "30";
         this.details.required = true;
         this.details.placeholder = "Enter Task Details";
         this.formContainer.appendChild(this.details);
@@ -200,15 +201,23 @@ const toDo = {
 
     //populate enlarged task with details
     fillEnlarged(){
-        const allTaskDetails = [this.title, this.details, this.dueDate, this.priority];
-        this.expandedInfo.id = "furtherInfo";
+        // containers to hold fields of data from the input fields
+        const titleDiv = makeDiv();
+        const detailsDiv = makeDiv();
+        const dateDiv = makeDiv();
+        const priorityDiv = makeDiv();
         
-        for(let i = 0; i < allTaskDetails.length; i++){
-            this.expandedInfo.appendChild(allTaskDetails[i]);
+        const divs = [titleDiv, detailsDiv, dateDiv, priorityDiv];
+        const allTaskDetails = [this.title.value, this.details.value, this.dueDate.value, this.priority.value];
+
+       for(let i = 0; i < allTaskDetails.length; i++){
+            divs[i].innerText = allTaskDetails[i];
+            divs[i].id = `field${i}`;
+            this.expandedInfo.appendChild(divs[i]);
         };
+        this.expandedInfo.id = "furtherInfo";
         this.enlargedToDo.appendChild(this.expandedInfo);
-        this.infoLayout();
-        //return allTaskDetails;               
+        this.infoLayout();          
     },
 
 

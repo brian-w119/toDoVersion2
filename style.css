@@ -216,9 +216,9 @@ button{
     display: flex;
     justify-content: space-evenly;
     background-color: grey;
-    position: absolute;
-    top: 45%;
-    right: 42%;    
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30%;
 }
 
 .buttonsStyling{
