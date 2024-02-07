@@ -169,12 +169,11 @@ const toDo = {
             }else if(priority === "HIGH"){
                 this.column2.appendChild(newDiv1); 
             };
-            
-            newDiv1.addEventListener("mousedown", ()=> {
-               this.expandToDo();
-               this.expandedTaskButtons();
-            });
         };
+        newDiv1.addEventListener("mousedown", ()=> {
+            this.expandToDo();
+            this.expandedTaskButtons();
+         });
     },
 
     //clears data from the input fields
@@ -201,7 +200,7 @@ const toDo = {
 
     //populate enlarged task with details
     fillEnlarged(){
-        // containers to hold fields of data from the input fields
+        this.expandedInfo.innerHTML = "";
         const titleDiv = makeDiv();
         const detailsDiv = makeDiv();
         const dateDiv = makeDiv();
@@ -213,6 +212,7 @@ const toDo = {
        for(let i = 0; i < allTaskDetails.length; i++){
             divs[i].innerText = allTaskDetails[i];
             divs[i].id = `field${i}`;
+            divs[i].classList.add("styling");
             this.expandedInfo.appendChild(divs[i]);
         };
         this.expandedInfo.id = "furtherInfo";
@@ -270,7 +270,6 @@ const toDo = {
      //removes DELETE and ReAssign buttons on click
     removeButtons2(){
         this.taskReAssign.addEventListener("click", ()=> this.removeButtons());
-        alert("ok");
     },
 
     //closes the enlarged task view and enables input buttons
