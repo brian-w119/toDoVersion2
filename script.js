@@ -210,7 +210,17 @@ const toDo = {
         const allTaskDetails = [this.title.value, this.details.value, this.dueDate.value, this.priority.value];
 
        for(let i = 0; i < allTaskDetails.length; i++){
-            divs[i].innerText = allTaskDetails[i];
+            if(allTaskDetails[i] === this.title.value){
+                divs[i].innerText = `Title: ${allTaskDetails[i]}`;
+            }else if(allTaskDetails[i] === this.dueDate.value){
+                divs[i].innerText = `Due Date: ${allTaskDetails[i]}`;
+            }else if(allTaskDetails[i] === this.priority.value){
+                divs[i].innerText = `Priority: ${allTaskDetails[i]}`;
+            }else{
+                divs[i].innerText = allTaskDetails[i]
+            };
+            
+            //divs[i].innerText = allTaskDetails[i];
             divs[i].id = `field${i}`;
             divs[i].classList.add("styling");
             this.expandedInfo.appendChild(divs[i]);
