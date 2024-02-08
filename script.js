@@ -69,6 +69,7 @@ const toDo = {
    // some attributes given to form elements
     makeForm(){
         this.formContainer.id = "formContainer";
+        const allFields = [this.title, this.details, this.dueDate, this.priority];
 
         this.title.type = "text";
         this.title.name = "task";
@@ -76,18 +77,14 @@ const toDo = {
         this.title.placeholder = "Title";
         this.title.required = true;
         this.formContainer.appendChild(this.title);
-        //this.grid1.appendChild(this.formContainer);
 
         this.details.name = "details";
         this.details.id = "details";
         this.details.value = "";
-        //this.details.maxLength = "100";
-        //this.details.style.width = "200px";
         this.details.row = "3";
         this.details.columns = "30";
         this.details.required = true;
         this.details.placeholder = "Enter Task Details";
-        this.formContainer.appendChild(this.details);
 
         this.dueDate.type = "date";
         this.dueDate.name = "dueDate";
@@ -95,7 +92,6 @@ const toDo = {
         this.dueDate.value = "";
         this.dueDate.required = true;
         this.dueDate.disabled = false;
-        this.formContainer.appendChild(this.dueDate);
 
         this.priority.type = "text";
         this.priority.classList.add("priority");
@@ -103,7 +99,11 @@ const toDo = {
         this.priority.value = "";
         this.priority.required = true;
         this.priority.placeholder = "Priority: Low / Medium / High";
-        this.formContainer.appendChild(this.priority);
+
+        //adds all input fields to formContainer element
+        for(let i = 0; i < allFields.length; i++){
+            this.formContainer.appendChild(allFields[i]);
+        };
 
         this.grid1.appendChild(this.formContainer);
     },
@@ -112,7 +112,7 @@ const toDo = {
         this.createTask.addEventListener("click", ()=> this.makeForm());
     },
 
-    //makes columns for outstanding tasks and add headings
+    //makes columns for outstanding tasks and adds headings
     makeOutstandingColumns(){
         const columnArr = [this.column0, this.column1, this.column2];
 
@@ -311,7 +311,6 @@ const toDo = {
         this.taskReAssign.addEventListener("click", ()=>{
             this.createreAssignButtons();
             this.disableReAssignButton();
-           // this.removeButtons();
         });
     },
 
@@ -342,10 +341,6 @@ const toDo = {
     removeDivContents(){
         const taskButtons = document.querySelector("#taskButtons")
         const contents = [this.taskReAssign, this.taskDelete];
-        //for(let i = 0; i < contents.length; i++){
-            //this.enlargedToDo.removeChild(contents[i]);
-        //};
-        //this.enlargedToDo.removeChild(taskButtons);
         this.taskButtonsContainer.innerText = "";
     },
 

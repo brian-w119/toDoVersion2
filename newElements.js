@@ -25,6 +25,4 @@ class InputField {
     }
 };
 
-
-
 export{makeDiv, makeButton, makeInput, InputField, makeFormElement};

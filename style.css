@@ -85,6 +85,8 @@ button{
     position: relative;
     top: 25%;
     margin-left: 8%;
+    margin-top: 10%;
+    right: 8%
 }
 
 .grid2{
@@ -244,4 +246,8 @@ button{
     background-color: lightcyan;
     border: 0.5px solid black;
     margin-bottom: 5%;
+}
+
+.dropdown-list{
+    margin-top: 10%;
 }
