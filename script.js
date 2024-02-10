@@ -176,14 +176,15 @@ const toDo = {
                 this.column2.appendChild(newDiv1); 
                 newDiv1.id = `task${this.task}-highP`;
             };
-            this.taskId = newDiv1.id;
+            
         };
+        this.taskId = newDiv1.id;
         newDiv1.addEventListener("mousedown", ()=> {
             this.expandToDo();
             this.expandedTaskButtons();
          });
          this.taskDelete.addEventListener("click", ()=>{
-            this.taskDelete();
+            this.taskToDelete();
          });
     },
 
@@ -362,8 +363,10 @@ const toDo = {
     },
 
     taskToDelete(){
-        const currentTask = document.querySelector("#this.taskId");
+        const currentTask = document.querySelector(`#${this.taskId}`);
+        console.log(currentTask);
         currentTask.remove();
+        document.body.removeChild(this.enlargedToDo);
     },
 
     init(){
