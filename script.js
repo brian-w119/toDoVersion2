@@ -25,6 +25,9 @@ const toDo = {
     enlargedToDo: makeDiv(),
     cancel: makeButton(),
     taskButtonsHolder: makeDiv(),
+    task: 0,
+    taskId: null,
+    activeTask: document.querySelector("this.taskId"),
 
     // container for information when task expanded
     expandedInfo: makeDiv(), 
@@ -47,7 +50,6 @@ const toDo = {
     column0: makeDiv(),
     column1 : makeDiv(),
     column2 : makeDiv(),
-
 
     defaultState(){
         this.createTask.classList.add("newToDo");
@@ -151,28 +153,37 @@ const toDo = {
     //assigns tasks to various columns
     captureInput(){
         const newDiv1 = makeDiv();
-        newDiv1.id = "taskStyling";
+        newDiv1.classList.add("taskStyling");
         const inputs = [this.title, this.dueDate];
         newDiv1.style.backgroundColor = "rgb(209, 215, 254)";
         newDiv1.style.marginBottom = "10px";
         newDiv1.style.color = "black";
         let priority = this.priority.value.toUpperCase();
         
+        this.task += 1;
         for(let i = 0; i < inputs.length; i++){
             newDiv1.innerText += `${inputs[i].value}\n`;
+            //newDiv1.id = `task${this.task}`;
             if(priority  === "LOW"){
                 this.column0.appendChild(newDiv1); 
+                newDiv1.id = `task${this.task}-lowP`;
 
             }else if(priority === "MEDIUM"){
                 this.column1.appendChild(newDiv1); 
+                newDiv1.id = `task${this.task}-medP`;
 
             }else if(priority === "HIGH"){
                 this.column2.appendChild(newDiv1); 
+                newDiv1.id = `task${this.task}-highP`;
             };
+            this.taskId = newDiv1.id;
         };
         newDiv1.addEventListener("mousedown", ()=> {
             this.expandToDo();
             this.expandedTaskButtons();
+         });
+         this.taskDelete.addEventListener("click", ()=>{
+            this.taskDelete();
          });
     },
 
@@ -202,6 +213,7 @@ const toDo = {
     fillEnlarged(){
         this.expandedInfo.innerHTML = "";
         const titleDiv = makeDiv();
+       
         const detailsDiv = makeDiv();
         const dateDiv = makeDiv();
         const priorityDiv = makeDiv();
@@ -291,6 +303,7 @@ const toDo = {
             this.enlargedToDo.removeChild(this.taskButtonsContainer);
             this.removeDivContents();
             this.taskReAssign.disabled = false;
+            //this.taskId = null;
         });
     },
 
@@ -348,6 +361,11 @@ const toDo = {
         this.taskReAssign.disabled = "true";
     },
 
+    taskToDelete(){
+        const currentTask = document.querySelector("#this.taskId");
+        currentTask.remove();
+    },
+
     init(){
         this.defaultState();
         this.generateForm();
@@ -357,6 +375,7 @@ const toDo = {
         this.closeEnlarged();
         this.reAssignTask();
         this.removeButtons2();
+        //this.deleteTask();
     },
 };
 

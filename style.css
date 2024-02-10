@@ -192,7 +192,7 @@ button{
     top: 5px;
 }
 
-#taskStyling{
+.taskStyling{
     margin-bottom: 10px;
     color:rgb(209, 215, 254)
 }
