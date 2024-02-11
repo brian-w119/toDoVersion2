@@ -28,6 +28,13 @@ const toDo = {
     task: 0,
     taskId: null,
     activeTask: null,
+    column: null,
+
+
+    lowPriority: makeButton(),
+    mediumPriority: makeButton(),
+    highPriority: makeButton(),
+    
 
     // container for information when task expanded
     expandedInfo: makeDiv(), 
@@ -166,25 +173,23 @@ const toDo = {
             //newDiv1.id = `task${this.task}`;
             if(priority  === "LOW"){
                 this.column0.appendChild(newDiv1); 
-                //newDiv1.id = `task${this.task}-lowP`;
+                newDiv1.id = `task${this.task}-lowP`;
 
             }else if(priority === "MEDIUM"){
                 this.column1.appendChild(newDiv1); 
-                //newDiv1.id = `task${this.task}-medP`;
+                newDiv1.id = `task${this.task}-medP`;
 
             }else if(priority === "HIGH"){
                 this.column2.appendChild(newDiv1); 
-                //newDiv1.id = `task${this.task}-highP`;
+                newDiv1.id = `task${this.task}-highP`;
             };
             
         };
         //this.taskId = newDiv1.id;
         newDiv1.addEventListener("mousedown", ()=> {
+            this.activeTask = newDiv1.id;
             this.expandToDo();
             this.expandedTaskButtons();
-         });
-         this.taskDelete.addEventListener("click", ()=>{
-            this.taskToDelete();
          });
     },
 
@@ -208,7 +213,6 @@ const toDo = {
         this.toDoExpanded = true;
         this.disableEnableButtons();
         this.fillEnlarged();
-        this.activeTask.id = "zoomedTask";
     },
 
     //populate enlarged task with details
@@ -333,16 +337,16 @@ const toDo = {
     createreAssignButtons(){
         this.taskButtonsContainer.id = "taskButtons";
 
-        const lowPriority = makeButton();
-        lowPriority.innerText = "Low Priority";
+        this.lowPriority = makeButton();
+        this.lowPriority.innerText = "Low Priority";
 
-        const mediumPriority = makeButton();
-        mediumPriority.innerText = "Medium Priority";
+        this.mediumPriority = makeButton();
+        this.mediumPriority.innerText = "Medium Priority";
 
-        const highPriority = makeButton();
-        highPriority.innerText = "High Priority";
+        this.highPriority = makeButton();
+        this.highPriority.innerText = "High Priority";
 
-        const priorities = [mediumPriority, highPriority, lowPriority];
+        const priorities = [this.mediumPriority, this.highPriority, this.lowPriority];
         for(let i = 0; i < priorities.length; i++){
            priorities[i].classList.add("buttonsStyling");
            this.taskButtonsContainer.appendChild(priorities[i]);
@@ -368,7 +372,36 @@ const toDo = {
         console.log(currentTask);
         currentTask.remove();
         document.body.removeChild(this.enlargedToDo);
+        this.closeEnlarged();
+        this.toDoExpanded = false;
+        this.disableEnableButtons();
+        this.clearInput();
     },
+    
+    priorityChange(){
+        const newpriorityDiv =  makeDiv();
+        const priorityLow = makeButton();
+        const priorityMed = makeButton();
+        const priorityHigh = makeButton();
+
+        const taskChangeButtons = [this.taskDelete, this.reAssignTask];
+        for(let i = 0; i < taskChangeButtons.length; i++){
+            this.taskReAssign.addEventListener("click", ()=>{
+                this.enlargedToDo.remove(taskChangeButtons[i]);
+            });
+
+        //adds class and id to task re-assign buttons
+        const priorityButtons = [priorityLow, priorityMed, priorityHigh];
+        for(let i = 0; i < this.priority.length; i++){
+            priorityButtons[i].id = `priorityButton${[i]}`;
+            priorityButtons[i].classList.add = "priorityButton";
+            newpriorityDiv.appendChild(priorityButtons[i]);
+        };
+        this.enlargedToDo.appendChild(newpriorityDiv);
+        };
+    
+    },
+
 
     init(){
         this.defaultState();
@@ -379,7 +412,10 @@ const toDo = {
         this.closeEnlarged();
         this.reAssignTask();
         this.removeButtons2();
-        //this.deleteTask();
+        this.taskDelete.addEventListener("click", ()=>{
+            this.taskToDelete();
+         });
+        // this.priorityChange();
     },
 };
 
