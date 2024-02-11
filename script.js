@@ -27,7 +27,7 @@ const toDo = {
     taskButtonsHolder: makeDiv(),
     task: 0,
     taskId: null,
-    activeTask: document.querySelector("this.taskId"),
+    activeTask: null,
 
     // container for information when task expanded
     expandedInfo: makeDiv(), 
@@ -166,19 +166,19 @@ const toDo = {
             //newDiv1.id = `task${this.task}`;
             if(priority  === "LOW"){
                 this.column0.appendChild(newDiv1); 
-                newDiv1.id = `task${this.task}-lowP`;
+                //newDiv1.id = `task${this.task}-lowP`;
 
             }else if(priority === "MEDIUM"){
                 this.column1.appendChild(newDiv1); 
-                newDiv1.id = `task${this.task}-medP`;
+                //newDiv1.id = `task${this.task}-medP`;
 
             }else if(priority === "HIGH"){
                 this.column2.appendChild(newDiv1); 
-                newDiv1.id = `task${this.task}-highP`;
+                //newDiv1.id = `task${this.task}-highP`;
             };
             
         };
-        this.taskId = newDiv1.id;
+        //this.taskId = newDiv1.id;
         newDiv1.addEventListener("mousedown", ()=> {
             this.expandToDo();
             this.expandedTaskButtons();
@@ -208,6 +208,7 @@ const toDo = {
         this.toDoExpanded = true;
         this.disableEnableButtons();
         this.fillEnlarged();
+        this.activeTask.id = "zoomedTask";
     },
 
     //populate enlarged task with details
@@ -363,7 +364,7 @@ const toDo = {
     },
 
     taskToDelete(){
-        const currentTask = document.querySelector(`#${this.taskId}`);
+        const currentTask = document.querySelector(`#${this.activeTask}`);
         console.log(currentTask);
         currentTask.remove();
         document.body.removeChild(this.enlargedToDo);
