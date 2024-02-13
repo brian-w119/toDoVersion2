@@ -29,12 +29,12 @@ const toDo = {
     taskId: null,
     activeTask: null,
     column: null,
+    assignmentChanged: null,
 
 
     lowPriority: makeButton(),
     mediumPriority: makeButton(),
     highPriority: makeButton(),
-    
 
     // container for information when task expanded
     expandedInfo: makeDiv(), 
@@ -113,7 +113,6 @@ const toDo = {
         for(let i = 0; i < allFields.length; i++){
             this.formContainer.appendChild(allFields[i]);
         };
-
         this.grid1.appendChild(this.formContainer);
     },
 
@@ -156,8 +155,7 @@ const toDo = {
         this.enter.addEventListener("click", ()=> this.captureInput());
     },
 
-    
-    //assigns tasks to various columns
+     //assigns tasks to various columns
     captureInput(){
         const newDiv1 = makeDiv();
         newDiv1.classList.add("taskStyling");
@@ -183,7 +181,6 @@ const toDo = {
                 this.column2.appendChild(newDiv1); 
                 newDiv1.id = `task${this.task}-highP`;
             };
-            
         };
         //this.taskId = newDiv1.id;
         newDiv1.addEventListener("mousedown", ()=> {
@@ -310,6 +307,7 @@ const toDo = {
             this.removeDivContents();
             this.taskReAssign.disabled = false;
             //this.taskId = null;
+            alert("view closed");
         });
     },
 
@@ -330,25 +328,29 @@ const toDo = {
         this.taskReAssign.addEventListener("click", ()=>{
             this.createreAssignButtons();
             this.disableReAssignButton();
+            this.columnReAssign();
         });
     },
-
 
     createreAssignButtons(){
         this.taskButtonsContainer.id = "taskButtons";
 
         this.lowPriority = makeButton();
         this.lowPriority.innerText = "Low Priority";
+        this.lowPriority.id = "priority0";
 
         this.mediumPriority = makeButton();
         this.mediumPriority.innerText = "Medium Priority";
+        this.mediumPriority.id = "priority1";
 
         this.highPriority = makeButton();
         this.highPriority.innerText = "High Priority";
+        this.highPriority.id = "priority2";
 
-        const priorities = [this.mediumPriority, this.highPriority, this.lowPriority];
+        const priorities = [this.lowPriority,this.mediumPriority, this.highPriority];
         for(let i = 0; i < priorities.length; i++){
            priorities[i].classList.add("buttonsStyling");
+           //priorities[i].id = `reAssign${[i]}`;
            this.taskButtonsContainer.appendChild(priorities[i]);
         };
         this.enlargedToDo.appendChild(this.taskButtonsContainer);
@@ -376,32 +378,40 @@ const toDo = {
         this.toDoExpanded = false;
         this.disableEnableButtons();
         this.clearInput();
+        this.dueDate.disabled = false;
     },
     
+    //enables due date field
     priorityChange(){
-        const newpriorityDiv =  makeDiv();
-        const priorityLow = makeButton();
-        const priorityMed = makeButton();
-        const priorityHigh = makeButton();
-
-        const taskChangeButtons = [this.taskDelete, this.reAssignTask];
-        for(let i = 0; i < taskChangeButtons.length; i++){
-            this.taskReAssign.addEventListener("click", ()=>{
-                this.enlargedToDo.remove(taskChangeButtons[i]);
-            });
-
-        //adds class and id to task re-assign buttons
-        const priorityButtons = [priorityLow, priorityMed, priorityHigh];
-        for(let i = 0; i < this.priority.length; i++){
-            priorityButtons[i].id = `priorityButton${[i]}`;
-            priorityButtons[i].classList.add = "priorityButton";
-            newpriorityDiv.appendChild(priorityButtons[i]);
-        };
-        this.enlargedToDo.appendChild(newpriorityDiv);
-        };
-    
+        this.dueDate.disabled = false;
     },
 
+    //re-assigns tasks to diggerent columns
+    columnReAssign(){
+        const currentTask = document.querySelector(`#${this.activeTask}`);
+
+        const priorityLow = document.querySelector("#priority0");
+        priorityLow.addEventListener("click", ()=> {
+            this.taskChangedCondition = true;
+            this.column0.appendChild(currentTask);
+            document.body.removeChild(this.enlargedToDo);
+        });
+
+        const priorityMedium = document.querySelector("#priority1");
+        priorityMedium.addEventListener("click", ()=> {
+            this.taskChangedCondition = true;
+            this.column1.appendChild(currentTask);
+            document.body.removeChild(this.enlargedToDo);
+        });
+
+        const priorityHigh = document.querySelector("#priority2");
+        priorityHigh.addEventListener("click", ()=> ()=> {
+            this.taskChangedCondition = true;
+            this.column2.appendChild(currentTask);
+            document.body.removeChild(this.enlargedToDo);
+        });
+        this.priorityChange();
+    },
 
     init(){
         this.defaultState();
@@ -415,6 +425,7 @@ const toDo = {
         this.taskDelete.addEventListener("click", ()=>{
             this.taskToDelete();
          });
+        //this.columnReAssign();
         // this.priorityChange();
     },
 };
