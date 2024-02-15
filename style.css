@@ -86,7 +86,7 @@ button{
     top: 25%;
     margin-left: 8%;
     margin-top: 10%;
-    right: 8%
+    right: 8%;
 }
 
 .grid2{
@@ -215,14 +215,16 @@ button{
 }
 
 #taskButtons{
-    width: 250px;
-    height: 35px;
-    display: flex;
-    justify-content: space-evenly;
+    width: 15vw;
+    height: 10vh;
+    display: block;
     background-color: grey;
     margin-left: auto;
     margin-right: auto;
     margin-top: 30%;
+    font-size: 0.8vw;
+    text-align: center;
+    padding-top: 0.5vw;
 }
 
 .buttonsStyling{
@@ -251,3 +253,12 @@ button{
 .dropdown-list{
     margin-top: 10%;
 }
+
+#priority1{
+    margin: 0 1vw;
+}
+
+#instruction{
+    margin-bottom: 2vh;
+}
+
