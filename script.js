@@ -61,7 +61,9 @@ const toDo = {
     defaultState(){
         this.createTask.classList.add("newToDo");
         this.enter.classList.add("enter");
+        this.enter.id = "enter";
         this.clear.classList.add("clear");
+        this.clear.id = "clear";
         this.clearEnter.classList.add("enterClear");
 
         this.createTask.textContent = "+New Task";
@@ -151,45 +153,6 @@ const toDo = {
         this.grid2.appendChild(this.outstanding);
     },
 
-    transferInput(){
-        this.enter.addEventListener("click", ()=> this.captureInput());
-    },
-
-     //assigns tasks to various columns
-    captureInput(){
-        const newDiv1 = makeDiv();
-        newDiv1.classList.add("taskStyling");
-        const inputs = [this.title, this.dueDate];
-        newDiv1.style.backgroundColor = "rgb(209, 215, 254)";
-        newDiv1.style.marginBottom = "10px";
-        newDiv1.style.color = "black";
-        let priority = this.priority.value.toUpperCase();
-        
-        this.task += 1;
-        for(let i = 0; i < inputs.length; i++){
-            newDiv1.innerText += `${inputs[i].value}\n`;
-            //newDiv1.id = `task${this.task}`;
-            if(priority  === "LOW"){
-                this.column0.appendChild(newDiv1); 
-                newDiv1.id = `task${this.task}-lowP`;
-
-            }else if(priority === "MEDIUM"){
-                this.column1.appendChild(newDiv1); 
-                newDiv1.id = `task${this.task}-medP`;
-
-            }else if(priority === "HIGH"){
-                this.column2.appendChild(newDiv1); 
-                newDiv1.id = `task${this.task}-highP`;
-            };
-        };
-        //this.taskId = newDiv1.id;
-        newDiv1.addEventListener("mousedown", ()=> {
-            this.activeTask = newDiv1.id;
-            this.expandToDo();
-            this.expandedTaskButtons();
-         });
-    },
-
     //clears data from the input fields
     clearInput(){
         this.clear.addEventListener("click", ()=> {
@@ -201,240 +164,36 @@ const toDo = {
         console.log("clearInput");
     },
 
-    //attaches the expanded task to the body and adds class and expands the task view
-    expandToDo(){
-        this.clearInput();
-        this.enlargedToDo.classList.add("enlargedToDo");
-        this.cancel.id = "cancel";
-        this.cancel.textContent = "X";
-        this.enlargedToDo.appendChild(this.cancel);
-        document.body.appendChild(this.enlargedToDo);
-        this.toDoExpanded = true;
-        this.disableEnableButtons();
-        this.fillEnlarged();
-    },
-
-    //populate enlarged task with details
-    fillEnlarged(){
-        this.expandedInfo.innerHTML = "";
-        const titleDiv = makeDiv();
-       
-        const detailsDiv = makeDiv();
-        const dateDiv = makeDiv();
-        const priorityDiv = makeDiv();
-        
-        const divs = [titleDiv, detailsDiv, dateDiv, priorityDiv];
-        const allTaskDetails = [this.title.value, this.details.value, this.dueDate.value, this.priority.value];
-
-       for(let i = 0; i < allTaskDetails.length; i++){
-            if(allTaskDetails[i] === this.title.value){
-                divs[i].innerText = `Title: ${allTaskDetails[i]}`;
-            }else if(allTaskDetails[i] === this.dueDate.value){
-                divs[i].innerText = `Due Date: ${allTaskDetails[i]}`;
-            }else if(allTaskDetails[i] === this.priority.value){
-                divs[i].innerText = `Priority: ${allTaskDetails[i]}`;
+    //thius function transfers data from input field to column on ENTER being pressed
+    transferToPriority(){
+         const enter = document.querySelector("#enter");
+         enter.addEventListener("click", ()=> {
+            if(this.priority.value === "low"){
+                this.addToColumn(this.column0);
+            }else if(this.priority.value === "medium"){
+                this.addToColumn(this.column1);
             }else{
-                divs[i].innerText = allTaskDetails[i]
+                this.addToColumn(this.column2);
             };
-            
-            //divs[i].innerText = allTaskDetails[i];
-            divs[i].id = `field${i}`;
-            divs[i].classList.add("styling");
-            this.expandedInfo.appendChild(divs[i]);
+         });
+    },
+
+    //this function determines which column the to do goes in
+    addToColumn(column){
+        const div = makeDiv();
+        div.id = "toDoContainer";
+        const data = [this.title, this.dueDate];
+        for(let i = 0; i < data.length; i++){
+            div.innerText += `\n${data[i].value}`;
         };
-        this.expandedInfo.id = "furtherInfo";
-        this.enlargedToDo.appendChild(this.expandedInfo);
-        this.infoLayout();          
-    },
-
-
-    // positions the different fields of the expanded task view
-    infoLayout(){
-        const info = [this.title, this.details, this.dueDate, this.priority];
-        for(let i = 0; i < info.length; i++){
-            info[i].style.display = "block";
-            info[i].style.marginLeft = "auto";
-            info[i].style.marginRight = "auto";
-
-            if(info[i] === this.details){
-                info[i].style.width = "300px";
-            };
-
-            if(info[i] === this.title){
-                info[i].style.marginTop = "100px";
-            };
-
-            if(info[i] === this.dueDate){
-                info[i].disabled = "true";
-            };
-        };
-    },
-
-    expandedTaskButtons(){
-        this.taskButtonsContainer.id = "newContainer";
-
-        this.taskDelete.id  = "taskDelete";
-        this.taskDelete.innerText = "Delete";
-
-        this.taskReAssign.id = "reAssign";
-        this.taskReAssign.innerText = "Re-Assign";
-
-        const buttons = [this.taskDelete, this.taskReAssign];
-        for(let i = 0; i < buttons.length; i++){
-            this.taskButtonsContainer.appendChild(buttons[i]);
-        };
-        this.enlargedToDo.appendChild(this.taskButtonsContainer);
-    },
-
-    //removes DELETE and ReAssign buttons
-    removeButtons(){
-        const buttons =  [this.taskDelete, this.taskReAssign];
-        for(let i = 0; i < buttons.length; i++){
-            this.taskButtonsContainer.removeChild(buttons[i]);
-        };
-    },
-    
-     //removes DELETE and ReAssign buttons on click
-    removeButtons2(){
-        this.taskReAssign.addEventListener("click", ()=> this.removeButtons());
-    },
-
-    //closes the enlarged task view and enables input buttons
-    closeEnlarged(){
-        this.cancel.addEventListener("click", ()=> {
-            this.activeTask = null;
-            document.body.removeChild(this.enlargedToDo);
-            this.toDoExpanded = false;
-            this.disableEnableButtons();
-            this.enlargedToDo.removeChild(this.taskButtonsContainer);
-            this.removeDivContents();
-            this.taskReAssign.disabled = false;
-            //this.taskId = null;
-            alert("view closed");
-        });
-    },
-
-    disableEnableButtons(){
-        const inputButtons = [this.createTask, this.clear, this.enter];
-        for(let i = 0; i < inputButtons.length; i++){
-            if(this.toDoExpanded === true){
-               inputButtons[i].disabled = true;
-            }else if(this.toDoExpanded === false){
-                inputButtons[i].disabled = false;
-            };
-        };
-        console.log(this.toDoExpanded);
-    },
-    
-    //re-assigns current tasks
-    reAssignTask(){
-        this.taskReAssign.addEventListener("click", ()=>{
-            this.createreAssignButtons();
-            this.disableReAssignButton();
-            this.columnReAssign();
-        });
-    },
-
-    createreAssignButtons(){
-        this.taskButtonsContainer.id = "taskButtons";
-
-        this.lowPriority = makeButton();
-        this.lowPriority.innerText = "Low Priority";
-        this.lowPriority.id = "priority0";
-
-        this.mediumPriority = makeButton();
-        this.mediumPriority.innerText = "Medium Priority";
-        this.mediumPriority.id = "priority1";
-
-        this.highPriority = makeButton();
-        this.highPriority.innerText = "High Priority";
-        this.highPriority.id = "priority2";
-
-        const priorities = [this.lowPriority,this.mediumPriority, this.highPriority];
-        for(let i = 0; i < priorities.length; i++){
-           priorities[i].classList.add("buttonsStyling");
-           //priorities[i].id = `reAssign${[i]}`;
-           this.taskButtonsContainer.appendChild(priorities[i]);
-        };
-        this.enlargedToDo.appendChild(this.taskButtonsContainer);
-        console.log(this.taskButtonsContainer);
-        //removes the expanded tasks, so that only task re-assign buttons are visible
-        this.enlargedToDo.removeChild(this.expandedInfo);
-    },
-
-    removeDivContents(){
-        const taskButtons = document.querySelector("#taskButtons")
-        const contents = [this.taskReAssign, this.taskDelete];
-        this.taskButtonsContainer.innerText = "";
-    },
-
-    disableReAssignButton(){
-        this.taskReAssign.disabled = "true";
-    },
-
-    taskToDelete(){
-        const currentTask = document.querySelector(`#${this.activeTask}`);
-        console.log(currentTask);
-        currentTask.remove();
-        document.body.removeChild(this.enlargedToDo);
-        this.closeEnlarged();
-        this.toDoExpanded = false;
-        this.disableEnableButtons();
-        this.clearInput();
-        this.dueDate.disabled = false;
-    },
-    
-    //enables due date field
-    priorityChange(){
-        this.dueDate.disabled = false;
-    },
-
-    //re-assigns tasks to diggerent columns
-    columnReAssign(){
-        const currentTask = document.querySelector(`#${this.activeTask}`);
-
-        const priorityLow = document.querySelector("#priority0");
-        priorityLow.addEventListener("click", ()=> {
-            this.taskChangedCondition = true;
-            this.column0.appendChild(currentTask);
-            document.body.removeChild(this.enlargedToDo);
-        });
-
-        const priorityMedium = document.querySelector("#priority1");
-        priorityMedium.addEventListener("click", ()=> {
-            this.taskChangedCondition = true;
-            this.column1.appendChild(currentTask);
-            document.body.removeChild(this.enlargedToDo);
-        });
-
-        const priorityHigh = document.querySelector("#priority2");
-        priorityHigh.addEventListener("click", ()=> ()=> {
-            this.taskChangedCondition = true;
-            this.column2.appendChild(currentTask);
-            document.body.removeChild(this.enlargedToDo);
-        });
-        this.priorityChange();
-    },
-
-    clearRogueContents(){
-        //const 
-      
+        column.appendChild(div);
     },
 
     init(){
         this.defaultState();
         this.generateForm();
         this.makeOutstandingColumns();
-        this.transferInput();
-        this.clearInput();
-        this.closeEnlarged();
-        this.reAssignTask();
-        this.removeButtons2();
-        this.taskDelete.addEventListener("click", ()=>{
-            this.taskToDelete();
-         });
-        //this.columnReAssign();
-        // this.priorityChange();
+        this.transferToPriority();
     },
 };
 
