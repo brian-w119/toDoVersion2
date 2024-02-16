@@ -162,6 +162,15 @@ button{
 }
 
 #column0, #column1, #column2{
-    overflow-y: scroll;
+    overflow-y: auto;
 }
+
+
+.toDo{
+    height: auto;
+    overflow-wrap: break-word;
+    background-color: brown;
+    margin-bottom: 1vh;
+}
+
 

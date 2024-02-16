@@ -166,8 +166,9 @@ const toDo = {
 
     //thius function transfers data from input field to column on ENTER being pressed
     transferToPriority(){
-         const enter = document.querySelector("#enter");
-         enter.addEventListener("click", ()=> {
+        const enter = document.querySelector("#enter");
+
+        enter.addEventListener("click", ()=> {
             if(this.priority.value === "low"){
                 this.addToColumn(this.column0);
             }else if(this.priority.value === "medium"){
@@ -181,19 +182,35 @@ const toDo = {
     //this function determines which column the to do goes in
     addToColumn(column){
         const div = makeDiv();
-        div.id = "toDoContainer";
-        const data = [this.title, this.dueDate];
+        //div.id = "toDoContainer";
+        const data = [this.title, this.dueDate, this.details];
         for(let i = 0; i < data.length; i++){
-            div.innerText += `\n${data[i].value}`;
+            if(data[i] === this.title){
+                div.innerText += `\nTitle: ${data[i].value}\n, `;
+            }else if(data[i] === this.dueDate){
+            div.innerText += `\nDue: ${data[i].value}\n`;
+            }else{
+                div.innerText += `\n${data[i].value}\n`;
+            };
+            div.classList.add("toDo");
         };
         column.appendChild(div);
+        this.taskEnlarge();
     },
+
+    taskEnlarge(){
+        const toDo = document.querySelector(".toDo");
+        toDo.addEventListener("mousedown", ()=> alert("ok"));
+    },
+
 
     init(){
         this.defaultState();
         this.generateForm();
         this.makeOutstandingColumns();
         this.transferToPriority();
+        this.clearInput();
+        
     },
 };
 
