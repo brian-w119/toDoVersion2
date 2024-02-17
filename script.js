@@ -35,11 +35,10 @@ const toDo = {
     lowPriority: makeButton(),
     mediumPriority: makeButton(),
     highPriority: makeButton(),
+    taskDiv: makeDiv(),
 
-    // container for information when task expanded
-    expandedInfo: makeDiv(), 
-
-    toDoExpanded: false,
+    //container to house task option buttons
+    optionDiv: makeDiv(),
 
     //container to house buttons for expanded tasks
     taskButtonsContainer: makeDiv(),
@@ -182,7 +181,7 @@ const toDo = {
     //this function determines which column the to do goes in
     addToColumn(column){
         const div = makeDiv();
-        //div.id = "toDoContainer";
+        //div.classList.add("toDoContainer");
         const data = [this.title, this.dueDate, this.details];
         for(let i = 0; i < data.length; i++){
             if(data[i] === this.title){
@@ -195,14 +194,60 @@ const toDo = {
             div.classList.add("toDo");
         };
         column.appendChild(div);
-        this.taskEnlarge();
+        this.taskHighlight();
+        this.taskOptionContainer();
     },
 
-    taskEnlarge(){
+    taskHighlight(){
         const toDo = document.querySelector(".toDo");
-        toDo.addEventListener("mousedown", ()=> alert("ok"));
+        toDo.addEventListener("mousedown", ()=> {
+            toDo.style.backgroundColor = "green";
+            this.appendTaskButtons();
+        });
     },
 
+    //creates container for task buttons and appends it
+    taskOptionContainer(){
+        const toDo = document.querySelector(".toDo");
+        this.optionDiv.id = "taskButtons";
+        this.cancel.id = "cancelButton";
+        this.cancel.innerText = "X";
+
+        toDo.addEventListener("mousedown", ()=> {
+            this.optionDiv.appendChild(this.cancel);
+            document.body.appendChild(this.optionDiv);
+       });
+    },
+
+    closeEnlarged(){
+        const toDo = document.querySelector(".toDo");
+        this.cancel.addEventListener("click", ()=> {
+            this.optionDiv.innerHTML = "";
+            this.taskDiv.innerHTML = "";
+            document.body.removeChild(this.optionDiv);
+            toDo.style.backgroundColor = "rgb(100, 149, 237)";
+        });
+    },
+    
+    //appends task buttons to their container and then the container to the enlarged view
+    appendTaskButtons(){
+        this.taskDiv.id = "taskDiv";
+
+        this.lowPriority.id = "lowP";
+        this.lowPriority.innerText = "Low Priority";
+
+        this.mediumPriority.id = "medP";
+        this.mediumPriority.innerText = "Medium Priority";
+
+        this.highPriority.id = "highP";
+        this.highPriority.innerText = "High Priority";
+
+        const buttons = [this.lowPriority, this.mediumPriority, this.highPriority];
+        for(let i = 0; i < buttons.length; i++){
+            this.taskDiv.appendChild(buttons[i]);
+        };
+        this.optionDiv.appendChild(this.taskDiv);
+    },
 
     init(){
         this.defaultState();
@@ -210,7 +255,7 @@ const toDo = {
         this.makeOutstandingColumns();
         this.transferToPriority();
         this.clearInput();
-        
+        this.closeEnlarged();
     },
 };
 

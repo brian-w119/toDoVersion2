@@ -93,6 +93,7 @@ button{
     display: flex;
     justify-content: space-between;
     overflow: hidden;
+    z-index: 1;
 }
 
 .grid2 > * {
@@ -171,6 +172,52 @@ button{
     overflow-wrap: break-word;
     background-color: brown;
     margin-bottom: 1vh;
+}
+
+#taskButtons{
+    width: 50vw;
+    height: 70vh;
+    background-color: rgb(100, 50, 100);
+    position: relative;
+    bottom: 65vw;
+    left: 11vw;
+    z-index: 2;
+}
+
+#cancelButton{
+    width: 1.4vw;
+    height: 1.3vw;
+    background-color: brown;
+    text-align: center;
+    position: relative;
+    top: -5%;
+    left: 23vw;
+    color: black;
+    font-size: larger;
+}
+
+#taskDiv{
+    width: 14.69vw;
+    height: 2vw;
+    background-color: rgb(100, 50, 100);
+    position: relative;
+    top: 40%;
+    left: 37%;
+}
+
+#lowP, #medP, #highP{
+    width: 4.2vw;
+    height: 2vw;
+    background-color: green;
+}
+
+#medP{
+    margin-left: 1vw;
+    margin-right: 1vw;
+}
+
+.toDoContainer{
+    background-color: rgb(100, 149, 237);
 }
 
 
