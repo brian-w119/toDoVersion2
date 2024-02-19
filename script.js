@@ -310,7 +310,6 @@ const toDo = {
             this.removeDivContents();
             this.taskReAssign.disabled = false;
             //this.taskId = null;
-            console.log("enlarged view closed");
         });
     },
 
@@ -387,50 +386,29 @@ const toDo = {
     
     //enables due date field
     priorityChange(){
-        this.dueDate.disabled = false;
-    },
+        const newpriorityDiv =  makeDiv();
+        const priorityLow = makeButton();
+        const priorityMed = makeButton();
+        const priorityHigh = makeButton();
 
-    //re-assigns tasks to diggerent columns
-    columnReAssign(){
-        const currentTask = document.querySelector(`#${this.activeTask}`);
-       
-        const priorityLow = document.querySelector("#priority0");
-        priorityLow.addEventListener("click", ()=> {
-            this.taskChangedCondition = true;
-            this.column0.appendChild(currentTask);
-            document.body.removeChild(this.enlargedToDo);
-        });
+        const taskChangeButtons = [this.taskDelete, this.reAssignTask];
+        for(let i = 0; i < taskChangeButtons.length; i++){
+            this.taskReAssign.addEventListener("click", ()=>{
+                this.enlargedToDo.remove(taskChangeButtons[i]);
+            });
 
-        const priorityMedium = document.querySelector("#priority1");
-        priorityMedium.addEventListener("click", ()=> {
-            this.taskChangedCondition = true;
-            this.column1.appendChild(currentTask);
-            document.body.removeChild(this.enlargedToDo);
-        });
-
-        const priorityHigh = document.querySelector("#priority2");
-        priorityHigh.addEventListener("click", ()=> ()=> {
-            this.taskChangedCondition = true;
-            this.column2.appendChild(currentTask);
-            document.body.removeChild(this.enlargedToDo);
-        });
-        this.priorityChange();
-    },
-
-    deleteRogueButtons(){
-        const container = document.querySelector("#newContainer");
-        const button0 = document.querySelector("#priority0");
-        const button1 = document.querySelector("#priority1");
-        const button2 =  document.querySelector("#priority2");
-
-        const array = [button0, button1, button2];
-        for(let i = 0; i < length.length; i++){
-            if(container.includes(array[i]) === true){
-                array[i].remove();
-                console.log("rogue button deleted");
-            };
+        //adds class and id to task re-assign buttons
+        const priorityButtons = [priorityLow, priorityMed, priorityHigh];
+        for(let i = 0; i < this.priority.length; i++){
+            priorityButtons[i].id = `priorityButton${[i]}`;
+            priorityButtons[i].classList.add = "priorityButton";
+            newpriorityDiv.appendChild(priorityButtons[i]);
         };
+        this.enlargedToDo.appendChild(newpriorityDiv);
+        };
+    
     },
+
 
     init(){
         this.defaultState();
