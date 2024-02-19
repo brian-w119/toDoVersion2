@@ -167,6 +167,7 @@ const toDo = {
     //thius function transfers data from input field to column on ENTER being pressed
     transferToPriority(){
         const enter = document.querySelector("#enter");
+        const taskClass = document.querySelectorAll("NewToDo");
 
         enter.addEventListener("click", ()=> {
             if(this.priority.value === "low"){
@@ -181,6 +182,7 @@ const toDo = {
 
     //this function determines which column the to do goes in
     addToColumn(column){
+        //this.task += 1;
         const div = makeDiv();
         div.style.backgroundColor = "rgb(100, 149, 237)";
         const data = [this.title, this.dueDate, this.details];
@@ -194,7 +196,9 @@ const toDo = {
                 div.innerText += `\n${data[i].value}\n`;
             };
             div.classList.add("NewToDo");
+           // div.id = this.task;
         };
+        this.task += 1;
         column.appendChild(div);
         this.taskHighlight();
         this.taskOptionContainer();
@@ -202,10 +206,11 @@ const toDo = {
 
     taskHighlight(){
         const toDo = document.querySelectorAll(".NewToDo");
+        //const current = document.querySelector("#")
         for(let i = 0; i < toDo.length; i++){
             toDo[i].addEventListener("mousedown", ()=> {
                 toDo[i].style.backgroundColor = "green";
-                toDo[i].id = "currentTask";
+                toDo[i].id = this.task;
                 toDo[i].classList.add("selected");
     
                 this.cancel.addEventListener("click", ()=> {
