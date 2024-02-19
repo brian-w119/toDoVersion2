@@ -244,7 +244,7 @@ const toDo = {
         };
         this.expandedInfo.id = "furtherInfo";
         this.enlargedToDo.appendChild(this.expandedInfo);
-        this.infoLayout();          
+        this.infoLayout();        
     },
 
 
@@ -310,7 +310,7 @@ const toDo = {
             this.removeDivContents();
             this.taskReAssign.disabled = false;
             //this.taskId = null;
-            alert("view closed");
+            console.log("enlarged view closed");
         });
     },
 
@@ -329,6 +329,7 @@ const toDo = {
     //re-assigns current tasks
     reAssignTask(){
         this.taskReAssign.addEventListener("click", ()=>{
+            this.deleteRogueButtons();
             this.createreAssignButtons();
             this.disableReAssignButton();
             this.columnReAssign();
@@ -392,7 +393,7 @@ const toDo = {
     //re-assigns tasks to diggerent columns
     columnReAssign(){
         const currentTask = document.querySelector(`#${this.activeTask}`);
-
+       
         const priorityLow = document.querySelector("#priority0");
         priorityLow.addEventListener("click", ()=> {
             this.taskChangedCondition = true;
@@ -416,9 +417,19 @@ const toDo = {
         this.priorityChange();
     },
 
-    clearRogueContents(){
-        //const 
-      
+    deleteRogueButtons(){
+        const container = document.querySelector("#newContainer");
+        const button0 = document.querySelector("#priority0");
+        const button1 = document.querySelector("#priority1");
+        const button2 =  document.querySelector("#priority2");
+
+        const array = [button0, button1, button2];
+        for(let i = 0; i < length.length; i++){
+            if(container.includes(array[i]) === true){
+                array[i].remove();
+                console.log("rogue button deleted");
+            };
+        };
     },
 
     init(){
