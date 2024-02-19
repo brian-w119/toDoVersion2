@@ -30,12 +30,13 @@ const toDo = {
     activeTask: null,
     column: null,
     assignmentChanged: null,
+    taskDiv: makeDiv(),
 
 
     lowPriority: makeButton(),
     mediumPriority: makeButton(),
     highPriority: makeButton(),
-    taskDiv: makeDiv(),
+    newTask: makeDiv(),
 
     //container to house task option buttons
     optionDiv: makeDiv(),
@@ -181,8 +182,9 @@ const toDo = {
     //this function determines which column the to do goes in
     addToColumn(column){
         const div = makeDiv();
-        //div.classList.add("toDoContainer");
+        div.style.backgroundColor = "rgb(100, 149, 237)";
         const data = [this.title, this.dueDate, this.details];
+        div.style.border = "1px solid black";
         for(let i = 0; i < data.length; i++){
             if(data[i] === this.title){
                 div.innerText += `\nTitle: ${data[i].value}\n, `;
@@ -191,7 +193,7 @@ const toDo = {
             }else{
                 div.innerText += `\n${data[i].value}\n`;
             };
-            div.classList.add("toDo");
+            div.classList.add("NewToDo");
         };
         column.appendChild(div);
         this.taskHighlight();
@@ -199,16 +201,26 @@ const toDo = {
     },
 
     taskHighlight(){
-        const toDo = document.querySelector(".toDo");
-        toDo.addEventListener("mousedown", ()=> {
-            toDo.style.backgroundColor = "green";
-            this.appendTaskButtons();
-        });
+        const toDo = document.querySelectorAll(".NewToDo");
+        for(let i = 0; i < toDo.length; i++){
+            toDo[i].addEventListener("mousedown", ()=> {
+                toDo[i].style.backgroundColor = "green";
+                toDo[i].id = "currentTask";
+                toDo[i].classList.add("selected");
+    
+                this.cancel.addEventListener("click", ()=> {
+                    toDo[i].id = "";
+                    toDo[i].className = "";
+                    toDo[i].style.backgroundColor = "rgb(100, 149, 237)";
+                });
+                this.appendTaskButtons();
+            });
+        };
     },
 
     //creates container for task buttons and appends it
     taskOptionContainer(){
-        const toDo = document.querySelector(".toDo");
+        const toDo = document.querySelector(".NewToDo");
         this.optionDiv.id = "taskButtons";
         this.cancel.id = "cancelButton";
         this.cancel.innerText = "X";
@@ -225,7 +237,7 @@ const toDo = {
             this.optionDiv.innerHTML = "";
             this.taskDiv.innerHTML = "";
             document.body.removeChild(this.optionDiv);
-            toDo.style.backgroundColor = "rgb(100, 149, 237)";
+           // toDo.style.backgroundColor = "rgb(100, 149, 237)";
         });
     },
     
