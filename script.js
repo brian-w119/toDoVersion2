@@ -187,6 +187,8 @@ const toDo = {
             this.activeTask = newDiv1.id;
             this.expandToDo();
             this.expandedTaskButtons();
+            this.clearRogueContents();
+            this.disableReAssignButton(false);
          });
     },
 
@@ -330,7 +332,7 @@ const toDo = {
     reAssignTask(){
         this.taskReAssign.addEventListener("click", ()=>{
             this.createreAssignButtons();
-            this.disableReAssignButton();
+            this.disableReAssignButton(true);
             this.columnReAssign();
         });
     },
@@ -368,8 +370,8 @@ const toDo = {
         this.taskButtonsContainer.innerText = "";
     },
 
-    disableReAssignButton(){
-        this.taskReAssign.disabled = "true";
+    disableReAssignButton(value){
+        this.taskReAssign.disabled = value;
     },
 
     taskToDelete(){
@@ -416,9 +418,21 @@ const toDo = {
         this.priorityChange();
     },
 
+    //removes unwanted task re-assign buttons
     clearRogueContents(){
-        //const 
-      
+        const container = document.querySelector("#newContainer");
+        const button1 =  document.querySelector("#priority0");
+        const button2 = document.querySelector("#priority1");
+        const button3 = document.querySelector("#priority2");
+
+        const rogueElements = [button1, button2, button3];
+
+        for(let i = 0; i < rogueElements.length; i++){
+            if(container.contains(rogueElements[i])){
+                rogueElements[i].remove();
+                console.log("rogue button deleted");
+            };
+        };
     },
 
     init(){
