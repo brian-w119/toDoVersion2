@@ -36,6 +36,8 @@ const toDo = {
     mediumPriority: makeButton(),
     highPriority: makeButton(),
 
+    clearAllTasks: makeButton(),
+
     // container for information when task expanded
     expandedInfo: makeDiv(), 
 
@@ -57,6 +59,11 @@ const toDo = {
     column0: makeDiv(),
     column1 : makeDiv(),
     column2 : makeDiv(),
+
+    question: makeButton(),
+    yesResponse: makeButton(),
+    noResponse: makeButton(),
+    questionBox: makeDiv(),
 
     defaultState(){
         this.createTask.classList.add("newToDo");
@@ -191,6 +198,8 @@ const toDo = {
             this.disableReAssignButton(false);
          });
     },
+
+
 
     //clears data from the input fields
     clearInput(){
@@ -447,6 +456,46 @@ const toDo = {
         console.log("inputs enabled");
     },
 
+    //deletes all outstanding tasks
+    deleteToDos(){
+        this.clearAllTasks.id = "wipeAll";
+        this.clearAllTasks.innerText = "DELETE ALL TASKS";
+        const deleteAll = document.querySelector("#wipeAll");
+        document.body.appendChild(this.clearAllTasks);
+        this.clearAllTasks.addEventListener("click", ()=> {
+            this.deleteQuestion();
+        });
+        console.log("delete all appended");
+    },
+
+    deleteQuestion(){
+        const text = makeDiv();
+        text.id = "textBox";
+        text.innerText = "Are You Sure ?";
+
+        const buttonBox = makeDiv();
+
+        this.yesResponse.id = "yesResponse";
+        this.yesResponse.innerText = "Yes";
+
+        this.noResponse.id = "noResponse";
+        this.noResponse.innerText = "No";
+
+        this.questionBox.id = "question";
+        
+        document.body.removeChild(this.clearAllTasks);
+        document.body.appendChild(this.questionBox);
+        this.questionBox.appendChild(text);
+        this.questionBox.appendChild(this.yesResponse);
+        this.questionBox.appendChild(this.noResponse);
+
+        this.questionBox.addEventListener("click", ()=>{
+            
+            
+
+        });
+    },
+
     init(){
         this.defaultState();
         this.generateForm();
@@ -459,8 +508,7 @@ const toDo = {
         this.taskDelete.addEventListener("click", ()=>{
             this.taskToDelete();
          });
-        //this.columnReAssign();
-        // this.priorityChange();
+        this.deleteToDos();
     },
 };
 

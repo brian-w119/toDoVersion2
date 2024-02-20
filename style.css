@@ -268,3 +268,52 @@ button{
     border: none;
 }
 
+#wipeAll{
+    width: 8vw;
+    height: 3vw;
+    background-color: darkred;
+    position: absolute;
+    left: 88%;
+    top: 25%;
+}
+
+#question{
+    width: 8vw;
+    height: 6.5vw;
+    background-color: grey;
+    position: absolute;
+    left: 88%;
+    top: 25%;
+}
+
+#yesResponse, #noResponse{
+    width: 3vw;
+    margin-top: 40%;
+}
+
+#yesResponse{
+    background-color: green;
+    position: relative;
+    margin-left: 0.5vw;
+    bottom: 1.5vh;
+}
+
+#noResponse{
+    background-color: red;
+    position: relative;
+    margin-left: 1vw;
+    bottom: 1.5vh;
+}
+
+#textBox{
+    width: 6.5vw;
+    background-color: white;
+    font-size: small;
+    height: 1.5vw;
+    margin-top: 1vh;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
