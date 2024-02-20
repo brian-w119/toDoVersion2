@@ -400,6 +400,7 @@ const toDo = {
             this.taskChangedCondition = true;
             this.column0.appendChild(currentTask);
             document.body.removeChild(this.enlargedToDo);
+            console.log("low priority selected");
         });
 
         const priorityMedium = document.querySelector("#priority1");
@@ -407,15 +408,18 @@ const toDo = {
             this.taskChangedCondition = true;
             this.column1.appendChild(currentTask);
             document.body.removeChild(this.enlargedToDo);
+            console.log("Medium priority selected")
         });
 
         const priorityHigh = document.querySelector("#priority2");
-        priorityHigh.addEventListener("click", ()=> ()=> {
+        priorityHigh.addEventListener("click", ()=> {
             this.taskChangedCondition = true;
             this.column2.appendChild(currentTask);
             document.body.removeChild(this.enlargedToDo);
+            console.log("high priority selected");
         });
         this.priorityChange();
+        this.enableInputButtons(false);
     },
 
     //removes unwanted task re-assign buttons
@@ -433,6 +437,14 @@ const toDo = {
                 console.log("rogue button deleted");
             };
         };
+    },
+
+    enableInputButtons(value){
+        const inputs = [this.enter, this.clear, this.createTask];
+        for(let i = 0; i < inputs.length; i++){
+            inputs[i].disabled = value
+        };
+        console.log("inputs enabled");
     },
 
     init(){
