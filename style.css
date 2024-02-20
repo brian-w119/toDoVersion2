@@ -240,8 +240,9 @@ button{
     height: auto;
     max-height: 40%;
     word-wrap: break-word;
-    width: 30vw;
-    overflow: scroll;
+    width: auto;;
+    overflow: automatic;
+    text-align: center;
 }
 
 .styling{
@@ -260,5 +261,10 @@ button{
 
 #instruction{
     margin-bottom: 2vh;
+}
+
+#field0, #field1, #field2, #field3{
+    background-color: white;
+    border: none;
 }
 
