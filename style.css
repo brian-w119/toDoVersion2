@@ -176,20 +176,21 @@ button{
 
 #taskDelete{
     color: blue;
-    width: 70px;
+    width: 30%;
+    margin: auto;
 }
 
 #reAssign{
     color: green;
-    width: 70px;
+    width: 30%;
+    margin: auto;
 }
 
 #newContainer{
     color: green;
-    width: 70px;
-    flex-wrap: wrap;
-    position: absolute;
-    top: 5px;
+    width: 50%;
+    margin: auto;
+    margin-top: 30%;
 }
 
 #column0 > .taskStyling{
@@ -241,8 +242,16 @@ button{
     padding-top: 0.5vw;
 }
 
-.buttonsStyling{
-    background-color: brown;
+#priority0{
+    background-color: blue;
+}
+
+#priority1{
+    background-color: orange;
+}
+
+#priority2{
+    background-color: red;
 }
 
 #field0, #field2, #field3{

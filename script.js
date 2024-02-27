@@ -228,7 +228,6 @@ const toDo = {
     fillEnlarged(){
         this.expandedInfo.innerHTML = "";
         const titleDiv = makeDiv();
-       
         const detailsDiv = makeDiv();
         const dateDiv = makeDiv();
         const priorityDiv = makeDiv();
@@ -253,7 +252,7 @@ const toDo = {
             this.expandedInfo.appendChild(divs[i]);
         };
         this.expandedInfo.id = "furtherInfo";
-        this.enlargedToDo.appendChild(this.expandedInfo);
+        //this.enlargedToDo.appendChild(this.expandedInfo);
         this.infoLayout(); 
     },
 
@@ -283,10 +282,10 @@ const toDo = {
         this.taskButtonsContainer.id = "newContainer";
 
         this.taskDelete.id  = "taskDelete";
-        this.taskDelete.innerText = "Delete";
+        this.taskDelete.innerText = "Task Delete";
 
         this.taskReAssign.id = "reAssign";
-        this.taskReAssign.innerText = "Re-Assign";
+        this.taskReAssign.innerText = "Task Re-Assign";
 
         const buttons = [this.taskDelete, this.taskReAssign];
         for(let i = 0; i < buttons.length; i++){
@@ -368,7 +367,7 @@ const toDo = {
         this.enlargedToDo.appendChild(this.taskButtonsContainer);
         console.log(this.taskButtonsContainer);
         //removes the expanded tasks, so that only task re-assign buttons are visible
-        this.enlargedToDo.removeChild(this.expandedInfo);
+        //this.enlargedToDo.removeChild(this.expandedInfo);
     },
 
     removeDivContents(){
