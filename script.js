@@ -159,17 +159,16 @@ const toDo = {
     },
 
     transferInput(){
-        this.enter.addEventListener("click", ()=> this.captureInput());
+        this.enter.addEventListener("click", ()=> {
+            this.captureInput();
+        });
     },
 
      //assigns tasks to various columns
     captureInput(){
         const newDiv1 = makeDiv();
         newDiv1.classList.add("taskStyling");
-        const inputs = [this.title, this.dueDate];
-        newDiv1.style.backgroundColor = "rgb(209, 215, 254)";
-        newDiv1.style.marginBottom = "10px";
-        newDiv1.style.color = "black";
+        const inputs = [this.title, this.dueDate, this.details];
         let priority = this.priority.value.toUpperCase();
         
         this.task += 1;
@@ -192,14 +191,14 @@ const toDo = {
         //this.taskId = newDiv1.id;
         newDiv1.addEventListener("mousedown", ()=> {
             this.activeTask = newDiv1.id;
+            //const attID = newDiv1.getAttribute("id");
+            console.log(`${this.activeTask}`);
             this.expandToDo();
             this.expandedTaskButtons();
             this.clearRogueContents();
             this.disableReAssignButton(false);
          });
     },
-
-
 
     //clears data from the input fields
     clearInput(){
@@ -255,9 +254,8 @@ const toDo = {
         };
         this.expandedInfo.id = "furtherInfo";
         this.enlargedToDo.appendChild(this.expandedInfo);
-        this.infoLayout();          
+        this.infoLayout(); 
     },
-
 
     // positions the different fields of the expanded task view
     infoLayout(){
@@ -321,7 +319,7 @@ const toDo = {
             this.removeDivContents();
             this.taskReAssign.disabled = false;
             //this.taskId = null;
-            alert("view closed");
+            alert("enlarged view closed");
         });
     },
 
@@ -491,8 +489,6 @@ const toDo = {
 
         this.questionBox.addEventListener("click", ()=>{
             
-            
-
         });
     },
 

@@ -192,10 +192,24 @@ button{
     top: 5px;
 }
 
-.taskStyling{
-    margin-bottom: 10px;
-    color:rgb(209, 215, 254)
+#column0 > .taskStyling{
+    margin-bottom: 20px;
+    background-color: pink;
+    overflow-wrap: break-word;
 }
+
+#column1 > .taskStyling{
+    margin-bottom: 20px;
+    background-color: pink;
+    overflow-wrap: break-word;
+}
+
+#column2 > .taskStyling{
+    margin-bottom: 20px;
+    background-color: pink;
+    overflow-wrap: break-word;
+}
+
 
 .priorities{
     color: black;
@@ -315,5 +329,10 @@ button{
     margin-left: auto;
     margin-right: auto;
     text-align: center;
+}
+
+#column0, #column1, #column2{
+    max-width: 30%;
+    overflow-y:scroll;
 }
 
