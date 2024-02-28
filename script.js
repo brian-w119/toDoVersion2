@@ -465,6 +465,7 @@ const toDo = {
         console.log("delete all appended");
     },
 
+    //function that presents two choices when "DELETE ALL TASKS" is pressed
     deleteQuestion(){
         const text = makeDiv();
         text.id = "textBox";
@@ -485,9 +486,29 @@ const toDo = {
         this.questionBox.appendChild(text);
         this.questionBox.appendChild(this.yesResponse);
         this.questionBox.appendChild(this.noResponse);
+    },
 
-        this.questionBox.addEventListener("click", ()=>{
-            
+    //function for "No" event
+    responseNo(){
+        this.noResponse.addEventListener("click", ()=> {
+            const innerContent = document.querySelector("#question");
+            document.body.removeChild(innerContent);
+            document.body.appendChild(this.clearAllTasks);
+            this.questionBox.innerHTML = "";
+            console.log("no clicked");
+        });
+    },
+
+    //function for "Yes" event
+    responseYes(){
+        this.yesResponse.addEventListener("click", ()=> {
+            console.log("yes clicked");
+            const columns = [this.column0, this.column1, this.column2];
+
+            for(let i = 0; i < columns.length; i++){
+                columns[i].innerHTML = "";
+            };
+            window.location.reload();
         });
     },
 
@@ -504,6 +525,8 @@ const toDo = {
             this.taskToDelete();
          });
         this.deleteToDos();
+        this.responseNo();
+        this.responseYes();
     },
 };
 
