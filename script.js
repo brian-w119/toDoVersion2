@@ -161,7 +161,17 @@ const toDo = {
     transferInput(){
         this.enter.addEventListener("click", ()=> {
             this.captureInput();
+            this.details.disabled = false;
         });
+    },
+
+    taskData:{
+        taskName: null,
+        taskDateDue: null,
+        taskInfo: null,
+        taskIdentifier: null,
+        taskClass: null,
+        column: null,
     },
 
      //assigns tasks to various columns
@@ -178,14 +188,17 @@ const toDo = {
             if(priority  === "LOW"){
                 this.column0.appendChild(newDiv1); 
                 newDiv1.id = `task${this.task}-lowP`;
+                //this.taskdata["taskIdentifier"] = `task${this.task}-lowP`;
 
             }else if(priority === "MEDIUM"){
                 this.column1.appendChild(newDiv1); 
                 newDiv1.id = `task${this.task}-medP`;
+                //this.taskdata["taskIdentifier"] = `task${this.task}-medP`;
 
             }else if(priority === "HIGH"){
                 this.column2.appendChild(newDiv1); 
                 newDiv1.id = `task${this.task}-highP`;
+                //this.taskdata["taskIdentifier"] = `task${this.task}-highP`;
             };
         };
         //this.taskId = newDiv1.id;
