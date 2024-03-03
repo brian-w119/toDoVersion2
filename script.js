@@ -10,7 +10,6 @@ const toDo = {
     grid1  : document.querySelector(".grid1"),
     grid2  : document.querySelector(".grid2"),
 
-
     clearEnter: makeDiv(), //container to hold enter and clear buttons
     title: makeInput(),
     details: makeFormElement(),
@@ -65,6 +64,22 @@ const toDo = {
     noResponse: makeButton(),
     questionBox: makeDiv(),
 
+    savedData: null,
+    retrievedData: null,
+    
+    whichPriority: null,
+    priorityL: [],
+    priorityM: [],
+    priorityH: [],
+
+    taskData:{
+        taskName: null,
+        taskDateDue: null,
+        taskInfo: null,
+        taskIdentifier: null,
+        taskClass: null,
+    },
+
     defaultState(){
         this.createTask.classList.add("newToDo");
         this.enter.classList.add("enter");
@@ -82,7 +97,7 @@ const toDo = {
         this.createTask.after(this.clearEnter);
     },
 
-   // some attributes given to form elements
+    //some attributes given to form elements
     makeForm(){
         this.formContainer.id = "formContainer";
         const allFields = [this.title, this.details, this.dueDate, this.priority];
@@ -162,19 +177,11 @@ const toDo = {
         this.enter.addEventListener("click", ()=> {
             this.captureInput();
             this.details.disabled = false;
+            this.saveToLocalObj();
         });
     },
 
-    taskData:{
-        taskName: null,
-        taskDateDue: null,
-        taskInfo: null,
-        taskIdentifier: null,
-        taskClass: null,
-        column: null,
-    },
-
-     //assigns tasks to various columns
+    //assigns tasks to various columns and saves data in object for localStorage
     captureInput(){
         const newDiv1 = makeDiv();
         newDiv1.classList.add("taskStyling");
@@ -184,28 +191,36 @@ const toDo = {
         this.task += 1;
         for(let i = 0; i < inputs.length; i++){
             newDiv1.innerText += `${inputs[i].value}\n`;
-            //newDiv1.id = `task${this.task}`;
+          
             if(priority  === "LOW"){
                 this.column0.appendChild(newDiv1); 
                 newDiv1.id = `task${this.task}-lowP`;
-                //this.taskdata["taskIdentifier"] = `task${this.task}-lowP`;
+                this.taskData["taskIdentifier"] = newDiv1.id;
+                //the "whichPriority" variable is used by the localStorage functionality
+                this.whichPriority = "lowP";
+                this.updateStorageObject();
 
             }else if(priority === "MEDIUM"){
                 this.column1.appendChild(newDiv1); 
                 newDiv1.id = `task${this.task}-medP`;
-                //this.taskdata["taskIdentifier"] = `task${this.task}-medP`;
+                this.taskData["taskIdentifier"] = newDiv1.id;
+                //the "whichPriority" variable is used by the localStorage functionality
+                this.whichPriority = "medP";
+                this.updateStorageObject();
 
             }else if(priority === "HIGH"){
                 this.column2.appendChild(newDiv1); 
                 newDiv1.id = `task${this.task}-highP`;
-                //this.taskdata["taskIdentifier"] = `task${this.task}-highP`;
+                this.taskData["taskIdentifier"] = newDiv1.id;
+                //the "whichPriority" variable is used by the localStorage functionality
+                this.whichPriority = "highP";
+                this.updateStorageObject();
             };
         };
-        //this.taskId = newDiv1.id;
+        this.taskData["taskClass"] = "taskStyling";
+
         newDiv1.addEventListener("mousedown", ()=> {
             this.activeTask = newDiv1.id;
-            //const attID = newDiv1.getAttribute("id");
-            console.log(`${this.activeTask}`);
             this.expandToDo();
             this.expandedTaskButtons();
             this.clearRogueContents();
@@ -213,6 +228,44 @@ const toDo = {
          });
     },
 
+   updateStorageObject(){
+        this.taskData["taskName"] = this.title.value;
+        this.taskData["taskDateDue"] = `${this.dueDate.value}`;
+        this.taskData["taskInfo"] = `${this.details.value}`;
+    },
+
+    //saves data to localStorage
+    saveToLocalObj(){
+        if(this.whichPriority === "lowP"){
+            this.priorityL.push(this.taskData);
+
+        }else if(this.whichPriority === "medP"){
+            this.priorityM.push(this.taskData);
+
+        }else if(this.whichPriority === "highP"){
+            this.priorityH.push(this.taskData);
+        };
+
+        const priorities = [this.priorityL, this.priorityM, this.priorityH];
+        for(let i = 0; i < priorities; i++){
+            localStorage.setItem("myContent", JSON.stringify(priorities[i]));
+        };
+       
+        localStorage.setItem("myContent", JSON.stringify(this.priorityL));
+        //console.log(localStorage);
+        
+        /*
+        this.savedData = JSON.parse(localStorage.getItem("myContent"));
+        console.log(this.savedData);
+        */
+    },
+
+    //retrieve data from localStorage
+    retrieveLocal(){
+        this.savedData = JSON.parse(localStorage.getItem("myContent"));
+        console.log(this.savedData);
+    },
+    
     //clears data from the input fields
     clearInput(){
         this.clear.addEventListener("click", ()=> {
@@ -474,8 +527,15 @@ const toDo = {
         document.body.appendChild(this.clearAllTasks);
         this.clearAllTasks.addEventListener("click", ()=> {
             this.deleteQuestion();
+            localStorage.clear();
         });
         console.log("delete all appended");
+    },
+
+    clearLocalStorage(){
+        if((this.column0.innerHTML = "") & (this.column1.innerHTML = "") & (this.column2.innerHTML === "")){
+            localStorage.clear();
+        };
     },
 
     //function that presents two choices when "DELETE ALL TASKS" is pressed
