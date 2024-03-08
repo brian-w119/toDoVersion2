@@ -71,6 +71,8 @@ const toDo = {
     priorityL: [],
     priorityM: [],
     priorityH: [],
+    priorityArr: [],
+    taskColumn: null,
 
     taskData:{
         taskName: null,
@@ -183,6 +185,7 @@ const toDo = {
 
     //assigns tasks to various columns and saves data in object for localStorage
     captureInput(){
+        this.taskData = {};
         const newDiv1 = makeDiv();
         newDiv1.classList.add("taskStyling");
         const inputs = [this.title, this.dueDate, this.details];
@@ -239,28 +242,40 @@ const toDo = {
     saveToLocalObj(){
         if(this.whichPriority === "lowP"){
             this.priorityL.push(this.taskData);
+            localStorage.setItem("priorityL", JSON.stringify(this.priorityL));
 
         }else if(this.whichPriority === "medP"){
             this.priorityM.push(this.taskData);
+            localStorage.setItem("priorityM", JSON.stringify(this.priorityM));
 
         }else if(this.whichPriority === "highP"){
             this.priorityH.push(this.taskData);
+            localStorage.setItem("priorityH", JSON.stringify(this.priorityH));
         };
+        console.log(this.priorityH);
+    },
 
-        const priorities = [this.priorityL, this.priorityL, this.priorityH];
-        for(let i = 0; i < priorities; i++){
-            localStorage.setItem("myContent", JSON.stringify(priorities[i]));
-        };
-
-        localStorage.setItem("myContent", JSON.stringify(this.priorityL));
-        //console.log(localStorage);
+    toJSON(priority){
+        localStorage.setItem("priority", JSON.stringify(priority));
     },
 
     //retrieve data from localStorage
-    retrieveLocal(){
-        this.savedData = JSON.parse(localStorage.getItem("myContent"));
-        console.log(this.savedData);
+    retrieveFromStorage(){
+        const colL = JSON.parse(localStorage.getItem("priorityL"));
+        const colM = JSON.parse(localStorage.getItem("priorityM"));
+        const colH = JSON.parse(localStorage.getItem("priorityH"));
+        
+        const columns = [colL, colM, colH];
+        for(let i = 0; i < columns.length; i++){
+            console.log(columns[i]);
+        };
     },
+    
+    //retrieved storage data be written back to columnns
+    writeToColumns(){
+
+    },
+
     
     //clears data from the input fields
     clearInput(){
@@ -578,6 +593,9 @@ const toDo = {
                 columns[i].innerHTML = "";
             };
             localStorage.clear();
+            this.priorityL = null;
+            this.priorityM = null;
+            this.priorityH = null;
             window.location.reload();
         });
     },
@@ -598,7 +616,7 @@ const toDo = {
         this.responseNo();
         this.responseYes();
         window.addEventListener("load", ()=>{
-            this.retrieveLocal();
+           this.retrieveFromStorage();
 
         }); 
     },
