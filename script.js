@@ -228,6 +228,7 @@ const toDo = {
          });
     },
 
+    //values of current task to be added to storage object
    updateStorageObject(){
         this.taskData["taskName"] = this.title.value;
         this.taskData["taskDateDue"] = `${this.dueDate.value}`;
@@ -246,18 +247,13 @@ const toDo = {
             this.priorityH.push(this.taskData);
         };
 
-        const priorities = [this.priorityL, this.priorityM, this.priorityH];
+        const priorities = [this.priorityL, this.priorityL, this.priorityH];
         for(let i = 0; i < priorities; i++){
             localStorage.setItem("myContent", JSON.stringify(priorities[i]));
         };
-       
+
         localStorage.setItem("myContent", JSON.stringify(this.priorityL));
         //console.log(localStorage);
-        
-        /*
-        this.savedData = JSON.parse(localStorage.getItem("myContent"));
-        console.log(this.savedData);
-        */
     },
 
     //retrieve data from localStorage
@@ -581,6 +577,7 @@ const toDo = {
             for(let i = 0; i < columns.length; i++){
                 columns[i].innerHTML = "";
             };
+            localStorage.clear();
             window.location.reload();
         });
     },
@@ -600,6 +597,10 @@ const toDo = {
         this.deleteToDos();
         this.responseNo();
         this.responseYes();
+        window.addEventListener("load", ()=>{
+            this.retrieveLocal();
+
+        }); 
     },
 };
 
