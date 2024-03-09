@@ -67,12 +67,14 @@ const toDo = {
     savedData: null,
     retrievedData: null,
     
+    // the below corresponds to localStorage
     whichPriority: null,
     priorityL: [],
     priorityM: [],
     priorityH: [],
-    priorityArr: [],
-    taskColumn: null,
+    colL: null,
+    colM: null,
+    colH: null,
 
     taskData:{
         taskName: null,
@@ -221,6 +223,7 @@ const toDo = {
             };
         };
         this.taskData["taskClass"] = "taskStyling";
+        console.log(newDiv1);
 
         newDiv1.addEventListener("mousedown", ()=> {
             this.activeTask = newDiv1.id;
@@ -261,22 +264,68 @@ const toDo = {
 
     //retrieve data from localStorage
     retrieveFromStorage(){
-        const colL = JSON.parse(localStorage.getItem("priorityL"));
-        const colM = JSON.parse(localStorage.getItem("priorityM"));
-        const colH = JSON.parse(localStorage.getItem("priorityH"));
+        this.colL = null;
+        this.colH = null;
+        this.colM = null;
+
+        this.colL = JSON.parse(localStorage.getItem("priorityL"));
+        this.colM = JSON.parse(localStorage.getItem("priorityM"));
+        this.colH = JSON.parse(localStorage.getItem("priorityH"));
         
-        const columns = [colL, colM, colH];
+        const columns = [this.colL, this.colM, this.colH];
         for(let i = 0; i < columns.length; i++){
-            console.log(columns[i]);
+            //console.log(columns[i]);
         };
     },
     
-    //retrieved storage data be written back to columnns
+    //retrieved storage data being written back to columnns
     writeToColumns(){
+        const newDiv = makeDiv();
+        const tempArr = [];
+        newDiv.classList.add("taskStyling");
 
+        const allPriorities = [this.colL, this.colM, this.colH];
+        for(let i = 0; i < allPriorities.length; i++){
+
+            for(let data in allPriorities[i]){
+
+                let info = Object.values(allPriorities[i][data]);
+                newDiv.id = `${(info[0])}`;
+                this.addRetrievedData(newDiv,info);
+                console.log(newDiv);
+
+                
+                for(let value in allPriorities[i][data]){
+                    //console.log(allPriorities[i][data][value]);
+                };
+
+            };
+           
+        };
     },
 
-    
+    addRetrievedData(div, arr){
+        div.style.whiteSpace = "pre";
+        for(let i = 1; i < 4; i++){
+           div.innerText +=  `${arr[i]} \n`;
+          
+        };
+        
+        
+    },
+
+    extractFromlocalStorage(){
+        const allPriorities = [this.colL, this.colM, this.colH];
+        for(let i = 0; i < allPriorities.length; i++){
+            const innerValues = Object.values(allPriorities[i]);
+            for(let key of innerValues){
+                console.log(key);
+ 
+             };
+         };
+    },
+
+
     //clears data from the input fields
     clearInput(){
         this.clear.addEventListener("click", ()=> {
@@ -617,6 +666,8 @@ const toDo = {
         this.responseYes();
         window.addEventListener("load", ()=>{
            this.retrieveFromStorage();
+           this.writeToColumns();
+           //this.extractFromlocalStorage();
 
         }); 
     },
