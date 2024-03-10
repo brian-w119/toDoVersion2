@@ -284,34 +284,47 @@ const toDo = {
         const tempArr = [];
         newDiv.classList.add("taskStyling");
 
+        //extracts data fro locaLStorage for the columns
         const allPriorities = [this.colL, this.colM, this.colH];
         for(let i = 0; i < allPriorities.length; i++){
 
             for(let data in allPriorities[i]){
-
                 let info = Object.values(allPriorities[i][data]);
                 newDiv.id = `${(info[0])}`;
                 this.addRetrievedData(newDiv,info);
-                console.log(newDiv);
-
-                
-                for(let value in allPriorities[i][data]){
-                    //console.log(allPriorities[i][data][value]);
-                };
-
+                const priority = newDiv.id.split("-");
+                this.assignToColumns(priority, newDiv);
+                console.log(newDiv, priority);
             };
+
+            //
            
         };
     },
 
-    addRetrievedData(div, arr){
-        div.style.whiteSpace = "pre";
-        for(let i = 1; i < 4; i++){
-           div.innerText +=  `${arr[i]} \n`;
-          
+    assignToColumns(priority, task){
+        if(priority[1] === "lowP"){
+            this.column0.appendChild(task);
+
+        }else if(priority[1] === "medP"){
+            this.column1.appendChild(task);
+            
+        }else if(priority[1] === "highP"){
+            this.column2.appendChild(task);
         };
-        
-        
+    },
+
+    //writes retrieved data from locaStorage to a div
+    addRetrievedData(div, arr){
+        const line1 = makeDiv();
+        const line2 = makeDiv();
+        const line3 = makeDiv();
+
+        const lines = [line1, line2, line3];
+        for(let i = 0; i < lines.length; i++){
+            lines[i].innerText = `${arr[i + 1]}`
+            div.appendChild(lines[i]);
+        };
     },
 
     extractFromlocalStorage(){
