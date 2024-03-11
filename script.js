@@ -297,7 +297,7 @@ const toDo = {
             for(let data in allPriorities[i]){
                 const info = Object.values(allPriorities[i][data]);
                 newDiv.id = `${(info[0])}`;
-                this.assignToTempCol(newDiv.id, info);
+                //this.assignToTempCol(newDiv.id, info);
                 console.log(info);
                 this.addRetrievedData(newDiv,info);
                 const priority = newDiv.id.split("-");
