@@ -75,6 +75,9 @@ const toDo = {
     colL: null,
     colM: null,
     colH: null,
+    tempL: [],
+    tempM: [],
+    tempH: [],
 
     taskData:{
         taskName: null,
@@ -274,7 +277,10 @@ const toDo = {
         
         const columns = [this.colL, this.colM, this.colH];
         for(let i = 0; i < columns.length; i++){
-            //console.log(columns[i]);
+            console.log(columns[i]);
+           // const object = Object.values(columns[i]);
+          //  console.log(object);
+
         };
     },
     
@@ -284,25 +290,27 @@ const toDo = {
         const tempArr = [];
         newDiv.classList.add("taskStyling");
 
-        //extracts data fro locaLStorage for the columns
+        //extracts data from locaLStorage for the columns
         const allPriorities = [this.colL, this.colM, this.colH];
         for(let i = 0; i < allPriorities.length; i++){
 
             for(let data in allPriorities[i]){
-                let info = Object.values(allPriorities[i][data]);
+                const info = Object.values(allPriorities[i][data]);
                 newDiv.id = `${(info[0])}`;
+                this.assignToTempCol(newDiv.id, info);
+                console.log(info);
                 this.addRetrievedData(newDiv,info);
                 const priority = newDiv.id.split("-");
                 this.assignToColumns(priority, newDiv);
-                console.log(newDiv, priority);
+                //console.log(newDiv, priority);
             };
-
-            //
-           
+           //  this.assignToColumns(priority, );
         };
     },
 
+    //assigned retrieved data to respective columns
     assignToColumns(priority, task){
+
         if(priority[1] === "lowP"){
             this.column0.appendChild(task);
 
@@ -312,6 +320,7 @@ const toDo = {
         }else if(priority[1] === "highP"){
             this.column2.appendChild(task);
         };
+
     },
 
     //writes retrieved data from locaStorage to a div
@@ -325,19 +334,8 @@ const toDo = {
             lines[i].innerText = `${arr[i + 1]}`
             div.appendChild(lines[i]);
         };
-    },
 
-    extractFromlocalStorage(){
-        const allPriorities = [this.colL, this.colM, this.colH];
-        for(let i = 0; i < allPriorities.length; i++){
-            const innerValues = Object.values(allPriorities[i]);
-            for(let key of innerValues){
-                console.log(key);
- 
-             };
-         };
     },
-
 
     //clears data from the input fields
     clearInput(){
