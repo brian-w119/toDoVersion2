@@ -83,9 +83,6 @@ const toDo = {
   tempM: [],
   tempH: [],
   taskReassigned: null,
-  lowPclicked: false,
-  medPclicked: false,
-  highPclicked: false,
 
   taskData: {
     taskName: null,
@@ -249,7 +246,6 @@ const toDo = {
       this.expandedTaskButtons();
       this.clearRogueContents();
       this.disableReAssignButton(false);
-      console.log(`task id is: ${this.activeTask}`);
     });
   },
 
@@ -310,6 +306,7 @@ const toDo = {
     }
   },
 
+  // this function is not used
   assignToColumns2() {
     const newDiv = makeDiv();
     newDiv.classList.add("taskStyling");
@@ -502,7 +499,6 @@ const toDo = {
       this.disableReAssignButton(true);
       this.columnReAssign();
     });
-    //this.storageReAssign();
   },
 
   createreAssignButtons() {
@@ -563,7 +559,7 @@ const toDo = {
     this.dueDate.disabled = false;
   },
 
-  //re-assigns tasks to different columns
+  //re-assigns tasks to diggerent columns
   columnReAssign() {
     const currentTask = document.querySelector(`#${this.activeTask}`);
 
@@ -571,8 +567,6 @@ const toDo = {
     priorityLow.addEventListener("click", () => {
       this.taskChangedCondition = true;
       this.column0.appendChild(currentTask);
-      this.lowPclicked = true;
-      //localStorage.setItem("priorityL", JSON.stringify(this.priorityL));
       document.body.removeChild(this.enlargedToDo);
       console.log("low priority selected");
     });
@@ -581,7 +575,6 @@ const toDo = {
     priorityMedium.addEventListener("click", () => {
       this.taskChangedCondition = true;
       this.column1.appendChild(currentTask);
-      this.medPclicked = true;
       document.body.removeChild(this.enlargedToDo);
       console.log("Medium priority selected");
     });
@@ -590,18 +583,11 @@ const toDo = {
     priorityHigh.addEventListener("click", () => {
       this.taskChangedCondition = true;
       this.column2.appendChild(currentTask);
-      this.highPclicked = true;
       document.body.removeChild(this.enlargedToDo);
       console.log("high priority selected");
     });
     this.priorityChange();
     this.enableInputButtons(false);
-    console.log(`${this.activeTask}---current task`);
-
-    //three lines of code pertains to obtaining local storage
-    this.lowPclicked = false;
-    this.medPclicked = false;
-    this.highPclicked = false;
   },
 
   //removes unwanted task re-assign buttons
